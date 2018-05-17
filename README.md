@@ -1,174 +1,72 @@
-# jhipster
-This application was generated using JHipster 4.14.4, you can find documentation and help at [http://www.jhipster.tech/documentation-archive/v4.14.4](http://www.jhipster.tech/documentation-archive/v4.14.4).
-
-## Development
-
-Before you can build this project, you must install and configure the following dependencies on your machine:
-
-1. [Node.js][]: We use Node to run a development web server and build the project.
-   Depending on your system, you can install Node either from source or as a pre-packaged bundle.
-2. [Yarn][]: We use Yarn to manage Node dependencies.
-   Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
-
-After installing Node, you should be able to run the following command to install development tools.
-You will only need to run this command when dependencies change in [package.json](package.json).
-
-    yarn install
-
-We use yarn scripts and [Webpack][] as our build system.
-
-
-Run the following commands in two separate terminals to create a blissful development experience where your browser
-auto-refreshes when files change on your hard drive.
-
-    ./gradlew
-    yarn start
-
-[Yarn][] is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
-specifying a newer version in [package.json](package.json). You can also run `yarn update` and `yarn install` to manage dependencies.
-Add the `help` flag on any command to see how you can use it. For example, `yarn help update`.
-
-The `yarn run` command will list all of the scripts available to run for this project.
-
-### Service workers
-
-Service workers are commented by default, to enable them please uncomment the following code.
-
-* The service worker registering script in index.html
-
-```html
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-        .register('./sw.js')
-        .then(function() { console.log('Service Worker Registered'); });
-    }
-</script>
-```
-
-Note: workbox creates the respective service worker and dynamically generate the `sw.js`
-
-### Managing dependencies
-
-For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
-
-    yarn add --exact leaflet
-
-To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
-
-    yarn add --dev --exact @types/leaflet
-
-Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Edit [src/main/webapp/app/vendor.ts](src/main/webapp/app/vendor.ts) file:
-~~~
-import 'leaflet/dist/leaflet.js';
-~~~
-
-Edit [src/main/webapp/content/css/vendor.css](src/main/webapp/content/css/vendor.css) file:
-~~~
-@import '~leaflet/dist/leaflet.css';
-~~~
-Note: there are still few other things remaining to do for Leaflet that we won't detail here.
-
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
-
-### Using angular-cli
-
-You can also use [Angular CLI][] to generate some custom client code.
-
-For example, the following command:
-
-    ng generate component my-component
-
-will generate few files:
-
-    create src/main/webapp/app/my-component/my-component.component.html
-    create src/main/webapp/app/my-component/my-component.component.ts
-    update src/main/webapp/app/app.module.ts
-
-
-## Building for production
-
-To optimize the jhipster application for production, run:
-
-    ./gradlew -Pprod clean bootRepackage
-
-This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
-To ensure everything worked, run:
-
-    java -jar build/libs/*.war
-
-Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
-
-Refer to [Using JHipster in production][] for more details.
-
-## Testing
-
-To launch your application's tests, run:
-
-    ./gradlew test
-
-### Client tests
-
-Unit tests are run by [Karma][] and written with [Jasmine][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
-
-    yarn test
-
-UI end-to-end tests are powered by [Protractor][], which is built on top of WebDriverJS. They're located in [src/test/javascript/e2e](src/test/javascript/e2e)
-and can be run by starting Spring Boot in one terminal (`./gradlew bootRun`) and running the tests (`yarn run e2e`) in a second one.
-### Other tests
-
-Performance tests are run by [Gatling][] and written in Scala. They're located in [src/test/gatling](src/test/gatling) and can be run with:
-
-    ./gradlew gatlingRun
-
-For more information, refer to the [Running tests page][].
-
-## Using Docker to simplify development (optional)
-
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
-
-For example, to start a postgresql database in a docker container, run:
-
-    docker-compose -f src/main/docker/postgresql.yml up -d
-
-To stop it and remove the container, run:
-
-    docker-compose -f src/main/docker/postgresql.yml down
-
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
-
-    ./gradlew bootRepackage -Pprod buildDocker
-
-Then run:
-
-    docker-compose -f src/main/docker/app.yml up -d
-
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
-
-## Continuous Integration (optional)
-
-To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
-
-[JHipster Homepage and latest documentation]: http://www.jhipster.tech
-[JHipster 4.14.4 archive]: http://www.jhipster.tech/documentation-archive/v4.14.4
-
-[Using JHipster in development]: http://www.jhipster.tech/documentation-archive/v4.14.4/development/
-[Using Docker and Docker-Compose]: http://www.jhipster.tech/documentation-archive/v4.14.4/docker-compose
-[Using JHipster in production]: http://www.jhipster.tech/documentation-archive/v4.14.4/production/
-[Running tests page]: http://www.jhipster.tech/documentation-archive/v4.14.4/running-tests/
-[Setting up Continuous Integration]: http://www.jhipster.tech/documentation-archive/v4.14.4/setting-up-ci/
-
-[Gatling]: http://gatling.io/
-[Node.js]: https://nodejs.org/
-[Yarn]: https://yarnpkg.org/
-[Webpack]: https://webpack.github.io/
-[Angular CLI]: https://cli.angular.io/
-[BrowserSync]: http://www.browsersync.io/
-[Karma]: http://karma-runner.github.io/
-[Jasmine]: http://jasmine.github.io/2.0/introduction.html
-[Protractor]: https://angular.github.io/protractor/
-[Leaflet]: http://leafletjs.com/
-[DefinitelyTyped]: http://definitelytyped.org/
 # jhipster.de
+
+Do the jhipster way:
+- https://jhipster.tech
+- https://start.jhipster.tech/jdl-studio
+- http://www.jhipster-book.com
+
+...and collect some knowledge about the Spring framework and some Webfrontend ;-)
+
+## JavaScript-frameworks:
+
+- https://iamakulov.com/pages/webpack/
+- https://medium.com/javascript-scene/top-javascript-frameworks-topics-to-learn-in-2017-700a397b711
+
+- https://angular.io
+- https://angular.io/docs/ts/latest/quickstart.html
+- https://github.com/mgechev/angular-seed (Angular Seed)
+- https://github.com/NathanWalker/angular-seed-advanced (Angular Seed Advanced)
+
+- https://facebook.github.io/react
+- https://vimeo.com/213710634
+- https://github.com/facebookincubator/create-react-app
+
+- https://vuejs.org
+- https://nuxtjs.org
+- https://youtu.be/utJGnK9D_UQ
+- https://github.com/vuejs/vue-cli
+
+## Security
+
+- OWASP (Open Web Application Security Project) Top 10
+- http://developer.okta.com
+- http://bit.ly/ng-okta
+- https://youtube.com/watch?v=Kb56GzQ2pSk
+
+- https://github.com/swaechter/spring-boot-angular-renderer
+
+## Cascading Style Sheets and CSS-frameworks:
+
+- (as we all know: #app - binding to an id in html, .blog-post - binding to a class-equals in html, .blog-post > p:first - binding to the first child right below the mentioned class,
+img + span.caption - sibling syntax: style tags at the same level)
+- http://sass-lang.com (Sass: Syntactically Awesome Style Sheets)
+- Skeleton ("dead simple"), Pure.css from Yahoo, Foundation, Bootstrap 4
+
+## Front End Performance Optimization
+
+- reduce HTTP Requests
+- gzip HTML, JavaScript and CSS (up to 70% before sending it to the browser)
+- far future expires headers
+- code minification
+- optimize images
+
+## HTTP/2 & Server Push
+
+- binary instead of textual
+- fully multiplexed instead of ordered and blocking
+- can use one connection for parallelism
+- uses header compression to reduce overhead
+- allows servers to "push" responses proactively into client caches
+- https://twitter.com/ankinson/status/829256167700492288
+
+## last tipps
+- use Chrome as a frontend developer
+- ...and the Chrome Developer Tools (=> Modern DevTools course)
+- do mobile first web design, not responsive web design! (https://youtu.be/K1SFnrf4jZo)
+- implement PRPL (the purple pattern: push the critical resources for the initial URL route - render initial route - pre-cache remaining routes - lazy-load and create remaining routes on demand)
+- use chrome://inspect && chrome://inspect?tracing
+- Lighthouse (Chrome Plugin)
+- DevTools Network & CPU Throttling (Chrome Tools)
+- https://developer.okta.com/blog
+
+(collected by [Matt Raible](https://github.com/mraible) @DevoxxUK 2017)
