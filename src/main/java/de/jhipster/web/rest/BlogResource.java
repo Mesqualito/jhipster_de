@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import de.jhipster.domain.Blog;
 
 import de.jhipster.repository.BlogRepository;
+import de.jhipster.security.SecurityUtils;
 import de.jhipster.web.rest.errors.BadRequestAlertException;
 import de.jhipster.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -101,6 +102,12 @@ public class BlogResource {
     public ResponseEntity<Blog> getBlog(@PathVariable Long id) {
         log.debug("REST request to get Blog : {}", id);
         Blog blog = blogRepository.findOne(id);
+
+        // The user is not allowed to access this blog, if it is not owned by this user:
+        if(!blog.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
+            blog = null;
+        }
+
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(blog));
     }
 
