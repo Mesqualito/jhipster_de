@@ -59,7 +59,7 @@ img + span.caption - sibling syntax: style tags at the same level)
 - allows servers to "push" responses proactively into client caches
 - https://twitter.com/ankinson/status/829256167700492288
 
-## last tipps
+## last tipps & mobile-first-development
 - use Chrome as a frontend developer
 - ...and the Chrome Developer Tools (=> Modern DevTools course)
 - do mobile first web design, not responsive web design! (https://youtu.be/K1SFnrf4jZo)
@@ -68,5 +68,7 @@ img + span.caption - sibling syntax: style tags at the same level)
 - Lighthouse (Chrome Plugin)
 - DevTools Network & CPU Throttling (Chrome Tools)
 - https://developer.okta.com/blog
+- https://developer.okta.com/blog/2017/07/20/the-ultimate-guide-to-progressive-web-applications
 
-(collected by [Matt Raible](https://github.com/mraible) @DevoxxUK 2017)
+
+(collected by [Matt Raible](https://github.com/mraible) @DevoxxUK 2017 u.a.)
