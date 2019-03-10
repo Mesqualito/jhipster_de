@@ -1,0 +1,9 @@
+With every push to GitHub, a webhook will trigger the fetch from GitHub & build with Jenkins.
+
+At the moment, my setup is configured with login over https to GitHub, which could be optimized in Jenkins with SSH-Login.
+After passing all tests and building a '*.war'-file with the Release-Version, successful testing & building will also build a docker-image and push it to my registry.
+If this Jenkins task will be evaluated successful, it will trigger another Jenkins task, which will ssh into my docker server and start a command.
+This way I am able to reload the docker-container based on the new published 'latest'-image.
+Then my nginx-proxy along with nginx-proxy-companion (let's-encrypt-support) will bring up the new master running 'https://www.jhipster.de'
+
+'$ jhipster ci-cd' would even better integrate with GitLab!
