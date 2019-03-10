@@ -1,55 +1,51 @@
 /* tslint:disable max-line-length */
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { JhipsterTestModule } from '../../../test.module';
-import { BlogComponent } from '../../../../../../main/webapp/app/entities/blog/blog.component';
-import { BlogService } from '../../../../../../main/webapp/app/entities/blog/blog.service';
-import { Blog } from '../../../../../../main/webapp/app/entities/blog/blog.model';
+import { BlogComponent } from 'app/entities/blog/blog.component';
+import { BlogService } from 'app/entities/blog/blog.service';
+import { Blog } from 'app/shared/model/blog.model';
 
 describe('Component Tests', () => {
-
     describe('Blog Management Component', () => {
         let comp: BlogComponent;
         let fixture: ComponentFixture<BlogComponent>;
         let service: BlogService;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [JhipsterTestModule],
                 declarations: [BlogComponent],
-                providers: [
-                    BlogService
-                ]
+                providers: []
             })
-            .overrideTemplate(BlogComponent, '')
-            .compileComponents();
-        }));
+                .overrideTemplate(BlogComponent, '')
+                .compileComponents();
 
-        beforeEach(() => {
             fixture = TestBed.createComponent(BlogComponent);
             comp = fixture.componentInstance;
             service = fixture.debugElement.injector.get(BlogService);
         });
 
-        describe('OnInit', () => {
-            it('Should call load all on init', () => {
-                // GIVEN
-                const headers = new HttpHeaders().append('link', 'link;link');
-                spyOn(service, 'query').and.returnValue(Observable.of(new HttpResponse({
-                    body: [new Blog(123)],
-                    headers
-                })));
+        it('Should call load all on init', () => {
+            // GIVEN
+            const headers = new HttpHeaders().append('link', 'link;link');
+            spyOn(service, 'query').and.returnValue(
+                of(
+                    new HttpResponse({
+                        body: [new Blog(123)],
+                        headers
+                    })
+                )
+            );
 
-                // WHEN
-                comp.ngOnInit();
+            // WHEN
+            comp.ngOnInit();
 
-                // THEN
-                expect(service.query).toHaveBeenCalled();
-                expect(comp.blogs[0]).toEqual(jasmine.objectContaining({id: 123}));
-            });
+            // THEN
+            expect(service.query).toHaveBeenCalled();
+            expect(comp.blogs[0]).toEqual(jasmine.objectContaining({ id: 123 }));
         });
     });
-
 });

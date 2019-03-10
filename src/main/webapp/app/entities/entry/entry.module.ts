@@ -1,49 +1,34 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageHelper } from 'app/core';
 
-import { JhipsterSharedModule } from '../../shared';
+import { JhipsterSharedModule } from 'app/shared';
 import {
-    EntryService,
-    EntryPopupService,
     EntryComponent,
     EntryDetailComponent,
-    EntryDialogComponent,
-    EntryPopupComponent,
+    EntryUpdateComponent,
     EntryDeletePopupComponent,
     EntryDeleteDialogComponent,
     entryRoute,
-    entryPopupRoute,
+    entryPopupRoute
 } from './';
 
-const ENTITY_STATES = [
-    ...entryRoute,
-    ...entryPopupRoute,
-];
+const ENTITY_STATES = [...entryRoute, ...entryPopupRoute];
 
 @NgModule({
-    imports: [
-        JhipsterSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
-    ],
-    declarations: [
-        EntryComponent,
-        EntryDetailComponent,
-        EntryDialogComponent,
-        EntryDeleteDialogComponent,
-        EntryPopupComponent,
-        EntryDeletePopupComponent,
-    ],
-    entryComponents: [
-        EntryComponent,
-        EntryDialogComponent,
-        EntryPopupComponent,
-        EntryDeleteDialogComponent,
-        EntryDeletePopupComponent,
-    ],
-    providers: [
-        EntryService,
-        EntryPopupService,
-    ],
+    imports: [JhipsterSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    declarations: [EntryComponent, EntryDetailComponent, EntryUpdateComponent, EntryDeleteDialogComponent, EntryDeletePopupComponent],
+    entryComponents: [EntryComponent, EntryUpdateComponent, EntryDeleteDialogComponent, EntryDeletePopupComponent],
+    providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class JhipsterEntryModule {}
+export class JhipsterEntryModule {
+    constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
+        this.languageHelper.language.subscribe((languageKey: string) => {
+            if (languageKey !== undefined) {
+                this.languageService.changeLanguage(languageKey);
+            }
+        });
+    }
+}

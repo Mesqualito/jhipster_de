@@ -19,9 +19,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+
 
 import static de.jhipster.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,6 +58,9 @@ public class TagResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restTagMockMvc;
 
     private Tag tag;
@@ -68,7 +73,8 @@ public class TagResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -156,7 +162,7 @@ public class TagResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(tag.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
-
+    
     @Test
     @Transactional
     public void getTag() throws Exception {
@@ -184,10 +190,11 @@ public class TagResourceIntTest {
     public void updateTag() throws Exception {
         // Initialize the database
         tagRepository.saveAndFlush(tag);
+
         int databaseSizeBeforeUpdate = tagRepository.findAll().size();
 
         // Update the tag
-        Tag updatedTag = tagRepository.findOne(tag.getId());
+        Tag updatedTag = tagRepository.findById(tag.getId()).get();
         // Disconnect from session so that the updates on updatedTag are not directly saved in db
         em.detach(updatedTag);
         updatedTag
@@ -212,15 +219,15 @@ public class TagResourceIntTest {
 
         // Create the Tag
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTagMockMvc.perform(put("/api/tags")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(tag)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isBadRequest());
 
         // Validate the Tag in the database
         List<Tag> tagList = tagRepository.findAll();
-        assertThat(tagList).hasSize(databaseSizeBeforeUpdate + 1);
+        assertThat(tagList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
@@ -228,9 +235,10 @@ public class TagResourceIntTest {
     public void deleteTag() throws Exception {
         // Initialize the database
         tagRepository.saveAndFlush(tag);
+
         int databaseSizeBeforeDelete = tagRepository.findAll().size();
 
-        // Get the tag
+        // Delete the tag
         restTagMockMvc.perform(delete("/api/tags/{id}", tag.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

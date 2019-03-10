@@ -1,40 +1,47 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Blog } from './blog.model';
+import { IBlog } from 'app/shared/model/blog.model';
+import { AccountService } from 'app/core';
 import { BlogService } from './blog.service';
-import { Principal } from '../../shared';
 
 @Component({
     selector: 'jhi-blog',
     templateUrl: './blog.component.html'
 })
 export class BlogComponent implements OnInit, OnDestroy {
-blogs: Blog[];
+    blogs: IBlog[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
     constructor(
-        private blogService: BlogService,
-        private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
-    }
+        protected blogService: BlogService,
+        protected jhiAlertService: JhiAlertService,
+        protected eventManager: JhiEventManager,
+        protected accountService: AccountService
+    ) {}
 
     loadAll() {
-        this.blogService.query().subscribe(
-            (res: HttpResponse<Blog[]>) => {
-                this.blogs = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.blogService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IBlog[]>) => res.ok),
+                map((res: HttpResponse<IBlog[]>) => res.body)
+            )
+            .subscribe(
+                (res: IBlog[]) => {
+                    this.blogs = res;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
+
     ngOnInit() {
         this.loadAll();
-        this.principal.identity().then((account) => {
+        this.accountService.identity().then(account => {
             this.currentAccount = account;
         });
         this.registerChangeInBlogs();
@@ -44,14 +51,15 @@ blogs: Blog[];
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: Blog) {
+    trackId(index: number, item: IBlog) {
         return item.id;
     }
+
     registerChangeInBlogs() {
-        this.eventSubscriber = this.eventManager.subscribe('blogListModification', (response) => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('blogListModification', response => this.loadAll());
     }
 
-    private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
+    protected onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
     }
 }

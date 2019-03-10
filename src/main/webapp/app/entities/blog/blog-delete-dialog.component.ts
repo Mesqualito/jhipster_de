@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Blog } from './blog.model';
-import { BlogPopupService } from './blog-popup.service';
+import { IBlog } from 'app/shared/model/blog.model';
 import { BlogService } from './blog.service';
 
 @Component({
@@ -13,22 +12,16 @@ import { BlogService } from './blog.service';
     templateUrl: './blog-delete-dialog.component.html'
 })
 export class BlogDeleteDialogComponent {
+    blog: IBlog;
 
-    blog: Blog;
-
-    constructor(
-        private blogService: BlogService,
-        public activeModal: NgbActiveModal,
-        private eventManager: JhiEventManager
-    ) {
-    }
+    constructor(protected blogService: BlogService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
 
     clear() {
         this.activeModal.dismiss('cancel');
     }
 
     confirmDelete(id: number) {
-        this.blogService.delete(id).subscribe((response) => {
+        this.blogService.delete(id).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'blogListModification',
                 content: 'Deleted an blog'
@@ -43,22 +36,30 @@ export class BlogDeleteDialogComponent {
     template: ''
 })
 export class BlogDeletePopupComponent implements OnInit, OnDestroy {
+    protected ngbModalRef: NgbModalRef;
 
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private blogPopupService: BlogPopupService
-    ) {}
+    constructor(protected activatedRoute: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {}
 
     ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            this.blogPopupService
-                .open(BlogDeleteDialogComponent as Component, params['id']);
+        this.activatedRoute.data.subscribe(({ blog }) => {
+            setTimeout(() => {
+                this.ngbModalRef = this.modalService.open(BlogDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+                this.ngbModalRef.componentInstance.blog = blog;
+                this.ngbModalRef.result.then(
+                    result => {
+                        this.router.navigate(['/blog', { outlets: { popup: null } }]);
+                        this.ngbModalRef = null;
+                    },
+                    reason => {
+                        this.router.navigate(['/blog', { outlets: { popup: null } }]);
+                        this.ngbModalRef = null;
+                    }
+                );
+            }, 0);
         });
     }
 
     ngOnDestroy() {
-        this.routeSub.unsubscribe();
+        this.ngbModalRef = null;
     }
 }

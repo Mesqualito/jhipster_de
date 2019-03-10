@@ -1,16 +1,23 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
-import { JhipsterBlogModule } from './blog/blog.module';
-import { JhipsterEntryModule } from './entry/entry.module';
-import { JhipsterTagModule } from './tag/tag.module';
-/* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
-        JhipsterBlogModule,
-        JhipsterEntryModule,
-        JhipsterTagModule,
-        /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
+        RouterModule.forChild([
+            {
+                path: 'blog',
+                loadChildren: './blog/blog.module#JhipsterBlogModule'
+            },
+            {
+                path: 'entry',
+                loadChildren: './entry/entry.module#JhipsterEntryModule'
+            },
+            {
+                path: 'tag',
+                loadChildren: './tag/tag.module#JhipsterTagModule'
+            }
+            /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
+        ])
     ],
     declarations: [],
     entryComponents: [],

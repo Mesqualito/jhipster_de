@@ -1,7 +1,6 @@
-
 {
     "jhipsterApp": {
-        "blog" : {
+        "blog": {
             "home": {
                 "title": "Blogs",
                 "createLabel": "Create a new Blog",

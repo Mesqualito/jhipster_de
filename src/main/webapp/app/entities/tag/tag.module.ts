@@ -1,49 +1,34 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageHelper } from 'app/core';
 
-import { JhipsterSharedModule } from '../../shared';
+import { JhipsterSharedModule } from 'app/shared';
 import {
-    TagService,
-    TagPopupService,
     TagComponent,
     TagDetailComponent,
-    TagDialogComponent,
-    TagPopupComponent,
+    TagUpdateComponent,
     TagDeletePopupComponent,
     TagDeleteDialogComponent,
     tagRoute,
-    tagPopupRoute,
+    tagPopupRoute
 } from './';
 
-const ENTITY_STATES = [
-    ...tagRoute,
-    ...tagPopupRoute,
-];
+const ENTITY_STATES = [...tagRoute, ...tagPopupRoute];
 
 @NgModule({
-    imports: [
-        JhipsterSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
-    ],
-    declarations: [
-        TagComponent,
-        TagDetailComponent,
-        TagDialogComponent,
-        TagDeleteDialogComponent,
-        TagPopupComponent,
-        TagDeletePopupComponent,
-    ],
-    entryComponents: [
-        TagComponent,
-        TagDialogComponent,
-        TagPopupComponent,
-        TagDeleteDialogComponent,
-        TagDeletePopupComponent,
-    ],
-    providers: [
-        TagService,
-        TagPopupService,
-    ],
+    imports: [JhipsterSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    declarations: [TagComponent, TagDetailComponent, TagUpdateComponent, TagDeleteDialogComponent, TagDeletePopupComponent],
+    entryComponents: [TagComponent, TagUpdateComponent, TagDeleteDialogComponent, TagDeletePopupComponent],
+    providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class JhipsterTagModule {}
+export class JhipsterTagModule {
+    constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
+        this.languageHelper.language.subscribe((languageKey: string) => {
+            if (languageKey !== undefined) {
+                this.languageService.changeLanguage(languageKey);
+            }
+        });
+    }
+}

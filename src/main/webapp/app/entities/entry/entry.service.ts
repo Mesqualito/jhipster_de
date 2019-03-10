@@ -1,80 +1,74 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
+import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+import { map } from 'rxjs/operators';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import { SERVER_API_URL } from 'app/app.constants';
+import { createRequestOption } from 'app/shared';
+import { IEntry } from 'app/shared/model/entry.model';
 
-import { Entry } from './entry.model';
-import { createRequestOption } from '../../shared';
+type EntityResponseType = HttpResponse<IEntry>;
+type EntityArrayResponseType = HttpResponse<IEntry[]>;
 
-export type EntityResponseType = HttpResponse<Entry>;
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EntryService {
+    public resourceUrl = SERVER_API_URL + 'api/entries';
 
-    private resourceUrl =  SERVER_API_URL + 'api/entries';
+    constructor(protected http: HttpClient) {}
 
-    constructor(private http: HttpClient, private dateUtils: JhiDateUtils) { }
-
-    create(entry: Entry): Observable<EntityResponseType> {
-        const copy = this.convert(entry);
-        return this.http.post<Entry>(this.resourceUrl, copy, { observe: 'response' })
-            .map((res: EntityResponseType) => this.convertResponse(res));
+    create(entry: IEntry): Observable<EntityResponseType> {
+        const copy = this.convertDateFromClient(entry);
+        return this.http
+            .post<IEntry>(this.resourceUrl, copy, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    update(entry: Entry): Observable<EntityResponseType> {
-        const copy = this.convert(entry);
-        return this.http.put<Entry>(this.resourceUrl, copy, { observe: 'response' })
-            .map((res: EntityResponseType) => this.convertResponse(res));
+    update(entry: IEntry): Observable<EntityResponseType> {
+        const copy = this.convertDateFromClient(entry);
+        return this.http
+            .put<IEntry>(this.resourceUrl, copy, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Entry>(`${this.resourceUrl}/${id}`, { observe: 'response'})
-            .map((res: EntityResponseType) => this.convertResponse(res));
+        return this.http
+            .get<IEntry>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    query(req?: any): Observable<HttpResponse<Entry[]>> {
+    query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
-        return this.http.get<Entry[]>(this.resourceUrl, { params: options, observe: 'response' })
-            .map((res: HttpResponse<Entry[]>) => this.convertArrayResponse(res));
+        return this.http
+            .get<IEntry[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Entry = this.convertItemFromServer(res.body);
-        return res.clone({body});
+    protected convertDateFromClient(entry: IEntry): IEntry {
+        const copy: IEntry = Object.assign({}, entry, {
+            date: entry.date != null && entry.date.isValid() ? entry.date.toJSON() : null
+        });
+        return copy;
     }
 
-    private convertArrayResponse(res: HttpResponse<Entry[]>): HttpResponse<Entry[]> {
-        const jsonResponse: Entry[] = res.body;
-        const body: Entry[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
+    protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+        if (res.body) {
+            res.body.date = res.body.date != null ? moment(res.body.date) : null;
         }
-        return res.clone({body});
+        return res;
     }
 
-    /**
-     * Convert a returned JSON object to Entry.
-     */
-    private convertItemFromServer(entry: Entry): Entry {
-        const copy: Entry = Object.assign({}, entry);
-        copy.date = this.dateUtils
-            .convertDateTimeFromServer(entry.date);
-        return copy;
-    }
-
-    /**
-     * Convert a Entry to a JSON which can be sent to the server.
-     */
-    private convert(entry: Entry): Entry {
-        const copy: Entry = Object.assign({}, entry);
-
-        copy.date = this.dateUtils.toDate(entry.date);
-        return copy;
+    protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+        if (res.body) {
+            res.body.forEach((entry: IEntry) => {
+                entry.date = entry.date != null ? moment(entry.date) : null;
+            });
+        }
+        return res;
     }
 }

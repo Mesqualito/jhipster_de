@@ -1,54 +1,40 @@
 /* tslint:disable max-line-length */
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 import { JhipsterTestModule } from '../../../test.module';
-import { EntryDetailComponent } from '../../../../../../main/webapp/app/entities/entry/entry-detail.component';
-import { EntryService } from '../../../../../../main/webapp/app/entities/entry/entry.service';
-import { Entry } from '../../../../../../main/webapp/app/entities/entry/entry.model';
+import { EntryDetailComponent } from 'app/entities/entry/entry-detail.component';
+import { Entry } from 'app/shared/model/entry.model';
 
 describe('Component Tests', () => {
-
     describe('Entry Management Detail Component', () => {
         let comp: EntryDetailComponent;
         let fixture: ComponentFixture<EntryDetailComponent>;
-        let service: EntryService;
+        const route = ({ data: of({ entry: new Entry(123) }) } as any) as ActivatedRoute;
 
-        beforeEach(async(() => {
+        beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [JhipsterTestModule],
                 declarations: [EntryDetailComponent],
-                providers: [
-                    EntryService
-                ]
+                providers: [{ provide: ActivatedRoute, useValue: route }]
             })
-            .overrideTemplate(EntryDetailComponent, '')
-            .compileComponents();
-        }));
-
-        beforeEach(() => {
+                .overrideTemplate(EntryDetailComponent, '')
+                .compileComponents();
             fixture = TestBed.createComponent(EntryDetailComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(EntryService);
         });
 
         describe('OnInit', () => {
             it('Should call load all on init', () => {
                 // GIVEN
 
-                spyOn(service, 'find').and.returnValue(Observable.of(new HttpResponse({
-                    body: new Entry(123)
-                })));
-
                 // WHEN
                 comp.ngOnInit();
 
                 // THEN
-                expect(service.find).toHaveBeenCalledWith(123);
-                expect(comp.entry).toEqual(jasmine.objectContaining({id: 123}));
+                expect(comp.entry).toEqual(jasmine.objectContaining({ id: 123 }));
             });
         });
     });
-
 });

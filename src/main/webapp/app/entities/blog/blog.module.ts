@@ -1,51 +1,34 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { JhiLanguageService } from 'ng-jhipster';
+import { JhiLanguageHelper } from 'app/core';
 
-import { JhipsterSharedModule } from '../../shared';
-import { JhipsterAdminModule } from '../../admin/admin.module';
+import { JhipsterSharedModule } from 'app/shared';
 import {
-    BlogService,
-    BlogPopupService,
     BlogComponent,
     BlogDetailComponent,
-    BlogDialogComponent,
-    BlogPopupComponent,
+    BlogUpdateComponent,
     BlogDeletePopupComponent,
     BlogDeleteDialogComponent,
     blogRoute,
-    blogPopupRoute,
+    blogPopupRoute
 } from './';
 
-const ENTITY_STATES = [
-    ...blogRoute,
-    ...blogPopupRoute,
-];
+const ENTITY_STATES = [...blogRoute, ...blogPopupRoute];
 
 @NgModule({
-    imports: [
-        JhipsterSharedModule,
-        JhipsterAdminModule,
-        RouterModule.forChild(ENTITY_STATES)
-    ],
-    declarations: [
-        BlogComponent,
-        BlogDetailComponent,
-        BlogDialogComponent,
-        BlogDeleteDialogComponent,
-        BlogPopupComponent,
-        BlogDeletePopupComponent,
-    ],
-    entryComponents: [
-        BlogComponent,
-        BlogDialogComponent,
-        BlogPopupComponent,
-        BlogDeleteDialogComponent,
-        BlogDeletePopupComponent,
-    ],
-    providers: [
-        BlogService,
-        BlogPopupService,
-    ],
+    imports: [JhipsterSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    declarations: [BlogComponent, BlogDetailComponent, BlogUpdateComponent, BlogDeleteDialogComponent, BlogDeletePopupComponent],
+    entryComponents: [BlogComponent, BlogUpdateComponent, BlogDeleteDialogComponent, BlogDeletePopupComponent],
+    providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class JhipsterBlogModule {}
+export class JhipsterBlogModule {
+    constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
+        this.languageHelper.language.subscribe((languageKey: string) => {
+            if (languageKey !== undefined) {
+                this.languageService.changeLanguage(languageKey);
+            }
+        });
+    }
+}

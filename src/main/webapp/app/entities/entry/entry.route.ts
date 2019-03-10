@@ -1,23 +1,73 @@
-import { Routes } from '@angular/router';
-
-import { UserRouteAccessService } from '../../shared';
+import { Injectable } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { UserRouteAccessService } from 'app/core';
+import { Observable, of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { Entry } from 'app/shared/model/entry.model';
+import { EntryService } from './entry.service';
 import { EntryComponent } from './entry.component';
 import { EntryDetailComponent } from './entry-detail.component';
-import { EntryPopupComponent } from './entry-dialog.component';
+import { EntryUpdateComponent } from './entry-update.component';
 import { EntryDeletePopupComponent } from './entry-delete-dialog.component';
+import { IEntry } from 'app/shared/model/entry.model';
+
+@Injectable({ providedIn: 'root' })
+export class EntryResolve implements Resolve<IEntry> {
+    constructor(private service: EntryService) {}
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IEntry> {
+        const id = route.params['id'] ? route.params['id'] : null;
+        if (id) {
+            return this.service.find(id).pipe(
+                filter((response: HttpResponse<Entry>) => response.ok),
+                map((entry: HttpResponse<Entry>) => entry.body)
+            );
+        }
+        return of(new Entry());
+    }
+}
 
 export const entryRoute: Routes = [
     {
-        path: 'entry',
+        path: '',
         component: EntryComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'jhipsterApp.entry.home.title'
         },
         canActivate: [UserRouteAccessService]
-    }, {
-        path: 'entry/:id',
+    },
+    {
+        path: ':id/view',
         component: EntryDetailComponent,
+        resolve: {
+            entry: EntryResolve
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'jhipsterApp.entry.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'new',
+        component: EntryUpdateComponent,
+        resolve: {
+            entry: EntryResolve
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'jhipsterApp.entry.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: ':id/edit',
+        component: EntryUpdateComponent,
+        resolve: {
+            entry: EntryResolve
+        },
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'jhipsterApp.entry.home.title'
@@ -28,28 +78,11 @@ export const entryRoute: Routes = [
 
 export const entryPopupRoute: Routes = [
     {
-        path: 'entry-new',
-        component: EntryPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'jhipsterApp.entry.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'entry/:id/edit',
-        component: EntryPopupComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'jhipsterApp.entry.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    },
-    {
-        path: 'entry/:id/delete',
+        path: ':id/delete',
         component: EntryDeletePopupComponent,
+        resolve: {
+            entry: EntryResolve
+        },
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'jhipsterApp.entry.home.title'

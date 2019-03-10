@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
-
+    
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <property name="floatType" value="float4" dbms="postgresql, h2"/>
@@ -29,7 +29,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="jhi_date" type="timestamp">
+            <column name="jhi_date" type="datetime">
                 <constraints nullable="false" />
             </column>
 
@@ -42,15 +42,15 @@
         <dropDefaultValue tableName="entry" columnName="jhi_date" columnDataType="datetime"/>
         
         <createTable tableName="entry_tag">
-            <column name="tags_id" type="bigint">
+            <column name="tag_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="entries_id" type="bigint">
+            <column name="entry_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="entries_id, tags_id" tableName="entry_tag"/>
+        <addPrimaryKey columnNames="entry_id, tag_id" tableName="entry_tag"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

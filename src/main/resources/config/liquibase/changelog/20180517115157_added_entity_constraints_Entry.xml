@@ -14,14 +14,14 @@
                                  referencedColumnNames="id"
                                  referencedTableName="blog"/>
 
-        <addForeignKeyConstraint baseColumnNames="entries_id"
+        <addForeignKeyConstraint baseColumnNames="entry_id"
                                  baseTableName="entry_tag"
-                                 constraintName="fk_entry_tag_entries_id"
+                                 constraintName="fk_entry_tag_entry_id"
                                  referencedColumnNames="id"
                                  referencedTableName="entry"/>
-        <addForeignKeyConstraint baseColumnNames="tags_id"
+        <addForeignKeyConstraint baseColumnNames="tag_id"
                                  baseTableName="entry_tag"
-                                 constraintName="fk_entry_tag_tags_id"
+                                 constraintName="fk_entry_tag_tag_id"
                                  referencedColumnNames="id"
                                  referencedTableName="tag"/>
         

@@ -1,10 +1,6 @@
 package de.jhipster.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import de.jhipster.domain.Blog;
-
 import de.jhipster.repository.BlogRepository;
-import de.jhipster.security.SecurityUtils;
 import de.jhipster.web.rest.errors.BadRequestAlertException;
 import de.jhipster.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -45,7 +41,6 @@ public class BlogResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/blogs")
-    @Timed
     public ResponseEntity<Blog> createBlog(@Valid @RequestBody Blog blog) throws URISyntaxException {
         log.debug("REST request to save Blog : {}", blog);
         if (blog.getId() != null) {
@@ -67,11 +62,10 @@ public class BlogResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/blogs")
-    @Timed
     public ResponseEntity<Blog> updateBlog(@Valid @RequestBody Blog blog) throws URISyntaxException {
         log.debug("REST request to update Blog : {}", blog);
         if (blog.getId() == null) {
-            return createBlog(blog);
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Blog result = blogRepository.save(blog);
         return ResponseEntity.ok()
@@ -85,11 +79,10 @@ public class BlogResource {
      * @return the ResponseEntity with status 200 (OK) and the list of blogs in body
      */
     @GetMapping("/blogs")
-    @Timed
     public List<Blog> getAllBlogs() {
         log.debug("REST request to get all Blogs");
-        return blogRepository.findByUserIsCurrentUser();
-        }
+        return blogRepository.findAll();
+    }
 
     /**
      * GET  /blogs/:id : get the "id" blog.
@@ -98,17 +91,10 @@ public class BlogResource {
      * @return the ResponseEntity with status 200 (OK) and with body the blog, or with status 404 (Not Found)
      */
     @GetMapping("/blogs/{id}")
-    @Timed
     public ResponseEntity<Blog> getBlog(@PathVariable Long id) {
         log.debug("REST request to get Blog : {}", id);
-        Blog blog = blogRepository.findOne(id);
-
-        // The user is not allowed to access this blog, if it is not owned by this user:
-        if(!blog.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin())){
-            blog = null;
-        }
-
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(blog));
+        Optional<Blog> blog = blogRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(blog);
     }
 
     /**
@@ -118,10 +104,9 @@ public class BlogResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/blogs/{id}")
-    @Timed
     public ResponseEntity<Void> deleteBlog(@PathVariable Long id) {
         log.debug("REST request to delete Blog : {}", id);
-        blogRepository.delete(id);
+        blogRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

@@ -1,43 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
+import { JhiDataUtils } from 'ng-jhipster';
 
-import { Entry } from './entry.model';
-import { EntryService } from './entry.service';
+import { IEntry } from 'app/shared/model/entry.model';
 
 @Component({
     selector: 'jhi-entry-detail',
     templateUrl: './entry-detail.component.html'
 })
-export class EntryDetailComponent implements OnInit, OnDestroy {
+export class EntryDetailComponent implements OnInit {
+    entry: IEntry;
 
-    entry: Entry;
-    private subscription: Subscription;
-    private eventSubscriber: Subscription;
-
-    constructor(
-        private eventManager: JhiEventManager,
-        private dataUtils: JhiDataUtils,
-        private entryService: EntryService,
-        private route: ActivatedRoute
-    ) {
-    }
+    constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
-        this.subscription = this.route.params.subscribe((params) => {
-            this.load(params['id']);
+        this.activatedRoute.data.subscribe(({ entry }) => {
+            this.entry = entry;
         });
-        this.registerChangeInEntries();
     }
 
-    load(id) {
-        this.entryService.find(id)
-            .subscribe((entryResponse: HttpResponse<Entry>) => {
-                this.entry = entryResponse.body;
-            });
-    }
     byteSize(field) {
         return this.dataUtils.byteSize(field);
     }
@@ -47,17 +28,5 @@ export class EntryDetailComponent implements OnInit, OnDestroy {
     }
     previousState() {
         window.history.back();
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
-    registerChangeInEntries() {
-        this.eventSubscriber = this.eventManager.subscribe(
-            'entryListModification',
-            (response) => this.load(this.entry.id)
-        );
     }
 }

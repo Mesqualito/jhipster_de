@@ -19,9 +19,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+
 
 import static de.jhipster.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,6 +61,9 @@ public class BlogResourceIntTest {
     @Autowired
     private EntityManager em;
 
+    @Autowired
+    private Validator validator;
+
     private MockMvc restBlogMockMvc;
 
     private Blog blog;
@@ -71,7 +76,8 @@ public class BlogResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -180,7 +186,7 @@ public class BlogResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].handle").value(hasItem(DEFAULT_HANDLE.toString())));
     }
-
+    
     @Test
     @Transactional
     public void getBlog() throws Exception {
@@ -209,10 +215,11 @@ public class BlogResourceIntTest {
     public void updateBlog() throws Exception {
         // Initialize the database
         blogRepository.saveAndFlush(blog);
+
         int databaseSizeBeforeUpdate = blogRepository.findAll().size();
 
         // Update the blog
-        Blog updatedBlog = blogRepository.findOne(blog.getId());
+        Blog updatedBlog = blogRepository.findById(blog.getId()).get();
         // Disconnect from session so that the updates on updatedBlog are not directly saved in db
         em.detach(updatedBlog);
         updatedBlog
@@ -239,15 +246,15 @@ public class BlogResourceIntTest {
 
         // Create the Blog
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBlogMockMvc.perform(put("/api/blogs")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(blog)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isBadRequest());
 
         // Validate the Blog in the database
         List<Blog> blogList = blogRepository.findAll();
-        assertThat(blogList).hasSize(databaseSizeBeforeUpdate + 1);
+        assertThat(blogList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
@@ -255,9 +262,10 @@ public class BlogResourceIntTest {
     public void deleteBlog() throws Exception {
         // Initialize the database
         blogRepository.saveAndFlush(blog);
+
         int databaseSizeBeforeDelete = blogRepository.findAll().size();
 
-        // Get the blog
+        // Delete the blog
         restBlogMockMvc.perform(delete("/api/blogs/{id}", blog.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

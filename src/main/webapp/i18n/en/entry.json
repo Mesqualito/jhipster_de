@@ -1,7 +1,6 @@
-
 {
     "jhipsterApp": {
-        "entry" : {
+        "entry": {
             "home": {
                 "title": "Entries",
                 "createLabel": "Create a new Entry",

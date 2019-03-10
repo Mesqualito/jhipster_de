@@ -1,13 +1,12 @@
 package de.jhipster.repository;
 
 import de.jhipster.domain.Tag;
-import org.springframework.stereotype.Repository;
-
 import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.Repository;
 
 
 /**
- * Spring Data JPA repository for the Tag entity.
+ * Spring Data  repository for the Tag entity.
  */
 @SuppressWarnings("unused")
 @Repository

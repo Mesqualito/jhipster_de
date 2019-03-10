@@ -1,8 +1,5 @@
 package de.jhipster.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import de.jhipster.domain.Entry;
-
 import de.jhipster.repository.EntryRepository;
 import de.jhipster.web.rest.errors.BadRequestAlertException;
 import de.jhipster.web.rest.util.HeaderUtil;
@@ -49,7 +46,6 @@ public class EntryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/entries")
-    @Timed
     public ResponseEntity<Entry> createEntry(@Valid @RequestBody Entry entry) throws URISyntaxException {
         log.debug("REST request to save Entry : {}", entry);
         if (entry.getId() != null) {
@@ -71,11 +67,10 @@ public class EntryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/entries")
-    @Timed
     public ResponseEntity<Entry> updateEntry(@Valid @RequestBody Entry entry) throws URISyntaxException {
         log.debug("REST request to update Entry : {}", entry);
         if (entry.getId() == null) {
-            return createEntry(entry);
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Entry result = entryRepository.save(entry);
         return ResponseEntity.ok()
@@ -87,15 +82,20 @@ public class EntryResource {
      * GET  /entries : get all the entries.
      *
      * @param pageable the pagination information
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of entries in body
      */
     @GetMapping("/entries")
-    @Timed
-    public ResponseEntity<List<Entry>> getAllEntries(Pageable pageable) {
+    public ResponseEntity<List<Entry>> getAllEntries(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of Entries");
-        Page<Entry> page = entryRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/entries");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        Page<Entry> page;
+        if (eagerload) {
+            page = entryRepository.findAllWithEagerRelationships(pageable);
+        } else {
+            page = entryRepository.findAll(pageable);
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/api/entries?eagerload=%b", eagerload));
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -105,11 +105,10 @@ public class EntryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the entry, or with status 404 (Not Found)
      */
     @GetMapping("/entries/{id}")
-    @Timed
     public ResponseEntity<Entry> getEntry(@PathVariable Long id) {
         log.debug("REST request to get Entry : {}", id);
-        Entry entry = entryRepository.findOneWithEagerRelationships(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(entry));
+        Optional<Entry> entry = entryRepository.findOneWithEagerRelationships(id);
+        return ResponseUtil.wrapOrNotFound(entry);
     }
 
     /**
@@ -119,10 +118,9 @@ public class EntryResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/entries/{id}")
-    @Timed
     public ResponseEntity<Void> deleteEntry(@PathVariable Long id) {
         log.debug("REST request to delete Entry : {}", id);
-        entryRepository.delete(id);
+        entryRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

@@ -9,9 +9,12 @@ import de.jhipster.web.rest.errors.ExceptionTranslator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -20,18 +23,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
+import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
+
 
 import static de.jhipster.web.rest.TestUtil.sameInstant;
 import static de.jhipster.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -56,6 +63,9 @@ public class EntryResourceIntTest {
     @Autowired
     private EntryRepository entryRepository;
 
+    @Mock
+    private EntryRepository entryRepositoryMock;
+
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -67,6 +77,9 @@ public class EntryResourceIntTest {
 
     @Autowired
     private EntityManager em;
+
+    @Autowired
+    private Validator validator;
 
     private MockMvc restEntryMockMvc;
 
@@ -80,7 +93,8 @@ public class EntryResourceIntTest {
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
+            .setMessageConverters(jacksonMessageConverter)
+            .setValidator(validator).build();
     }
 
     /**
@@ -161,24 +175,6 @@ public class EntryResourceIntTest {
 
     @Test
     @Transactional
-    public void checkContentIsRequired() throws Exception {
-        int databaseSizeBeforeTest = entryRepository.findAll().size();
-        // set the field null
-        entry.setContent(null);
-
-        // Create the Entry, which fails.
-
-        restEntryMockMvc.perform(post("/api/entries")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(entry)))
-            .andExpect(status().isBadRequest());
-
-        List<Entry> entryList = entryRepository.findAll();
-        assertThat(entryList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkDateIsRequired() throws Exception {
         int databaseSizeBeforeTest = entryRepository.findAll().size();
         // set the field null
@@ -210,6 +206,39 @@ public class EntryResourceIntTest {
             .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(sameInstant(DEFAULT_DATE))));
     }
+    
+    @SuppressWarnings({"unchecked"})
+    public void getAllEntriesWithEagerRelationshipsIsEnabled() throws Exception {
+        EntryResource entryResource = new EntryResource(entryRepositoryMock);
+        when(entryRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restEntryMockMvc = MockMvcBuilders.standaloneSetup(entryResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restEntryMockMvc.perform(get("/api/entries?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(entryRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllEntriesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        EntryResource entryResource = new EntryResource(entryRepositoryMock);
+            when(entryRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restEntryMockMvc = MockMvcBuilders.standaloneSetup(entryResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restEntryMockMvc.perform(get("/api/entries?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(entryRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
 
     @Test
     @Transactional
@@ -240,10 +269,11 @@ public class EntryResourceIntTest {
     public void updateEntry() throws Exception {
         // Initialize the database
         entryRepository.saveAndFlush(entry);
+
         int databaseSizeBeforeUpdate = entryRepository.findAll().size();
 
         // Update the entry
-        Entry updatedEntry = entryRepository.findOne(entry.getId());
+        Entry updatedEntry = entryRepository.findById(entry.getId()).get();
         // Disconnect from session so that the updates on updatedEntry are not directly saved in db
         em.detach(updatedEntry);
         updatedEntry
@@ -272,15 +302,15 @@ public class EntryResourceIntTest {
 
         // Create the Entry
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restEntryMockMvc.perform(put("/api/entries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(entry)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isBadRequest());
 
         // Validate the Entry in the database
         List<Entry> entryList = entryRepository.findAll();
-        assertThat(entryList).hasSize(databaseSizeBeforeUpdate + 1);
+        assertThat(entryList).hasSize(databaseSizeBeforeUpdate);
     }
 
     @Test
@@ -288,9 +318,10 @@ public class EntryResourceIntTest {
     public void deleteEntry() throws Exception {
         // Initialize the database
         entryRepository.saveAndFlush(entry);
+
         int databaseSizeBeforeDelete = entryRepository.findAll().size();
 
-        // Get the entry
+        // Delete the entry
         restEntryMockMvc.perform(delete("/api/entries/{id}", entry.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { Entry } from './entry.model';
-import { EntryPopupService } from './entry-popup.service';
+import { IEntry } from 'app/shared/model/entry.model';
 import { EntryService } from './entry.service';
 
 @Component({
@@ -13,22 +12,16 @@ import { EntryService } from './entry.service';
     templateUrl: './entry-delete-dialog.component.html'
 })
 export class EntryDeleteDialogComponent {
+    entry: IEntry;
 
-    entry: Entry;
-
-    constructor(
-        private entryService: EntryService,
-        public activeModal: NgbActiveModal,
-        private eventManager: JhiEventManager
-    ) {
-    }
+    constructor(protected entryService: EntryService, public activeModal: NgbActiveModal, protected eventManager: JhiEventManager) {}
 
     clear() {
         this.activeModal.dismiss('cancel');
     }
 
     confirmDelete(id: number) {
-        this.entryService.delete(id).subscribe((response) => {
+        this.entryService.delete(id).subscribe(response => {
             this.eventManager.broadcast({
                 name: 'entryListModification',
                 content: 'Deleted an entry'
@@ -43,22 +36,30 @@ export class EntryDeleteDialogComponent {
     template: ''
 })
 export class EntryDeletePopupComponent implements OnInit, OnDestroy {
+    protected ngbModalRef: NgbModalRef;
 
-    routeSub: any;
-
-    constructor(
-        private route: ActivatedRoute,
-        private entryPopupService: EntryPopupService
-    ) {}
+    constructor(protected activatedRoute: ActivatedRoute, protected router: Router, protected modalService: NgbModal) {}
 
     ngOnInit() {
-        this.routeSub = this.route.params.subscribe((params) => {
-            this.entryPopupService
-                .open(EntryDeleteDialogComponent as Component, params['id']);
+        this.activatedRoute.data.subscribe(({ entry }) => {
+            setTimeout(() => {
+                this.ngbModalRef = this.modalService.open(EntryDeleteDialogComponent as Component, { size: 'lg', backdrop: 'static' });
+                this.ngbModalRef.componentInstance.entry = entry;
+                this.ngbModalRef.result.then(
+                    result => {
+                        this.router.navigate(['/entry', { outlets: { popup: null } }]);
+                        this.ngbModalRef = null;
+                    },
+                    reason => {
+                        this.router.navigate(['/entry', { outlets: { popup: null } }]);
+                        this.ngbModalRef = null;
+                    }
+                );
+            }, 0);
         });
     }
 
     ngOnDestroy() {
-        this.routeSub.unsubscribe();
+        this.ngbModalRef = null;
     }
 }
