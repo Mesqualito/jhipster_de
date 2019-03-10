@@ -1,6 +1,6 @@
 package de.jhipster.web.rest.errors;
 
-import de.jhipster.JhipsterApp;
+import de.jhipster.AppApp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see ExceptionTranslator
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = AppApp.class)
 public class ExceptionTranslatorIntTest {
 
     @Autowired

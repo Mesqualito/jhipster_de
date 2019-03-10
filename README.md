@@ -1,4 +1,4 @@
-# jhipster
+# app
 
 This application was generated using JHipster 5.8.2, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.8.2](https://www.jhipster.tech/documentation-archive/v5.8.2).
 
@@ -89,7 +89,7 @@ will generate few files:
 
 ## Building for production
 
-To optimize the jhipster application for production, run:
+To optimize the app application for production, run:
 
     ./gradlew -Pprod clean bootWar
 

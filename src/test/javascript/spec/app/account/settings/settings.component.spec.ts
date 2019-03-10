@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable, throwError } from 'rxjs';
 
-import { JhipsterTestModule } from '../../../test.module';
+import { AppTestModule } from '../../../test.module';
 import { AccountService } from 'app/core';
 import { SettingsComponent } from 'app/account/settings/settings.component';
+import { JhiTrackerService } from 'app/core/tracker/tracker.service';
+import { MockTrackerService } from '../../../helpers/mock-tracker.service';
 
 describe('Component Tests', () => {
     describe('SettingsComponent', () => {
@@ -13,9 +15,14 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [JhipsterTestModule],
+                imports: [AppTestModule],
                 declarations: [SettingsComponent],
-                providers: []
+                providers: [
+                    {
+                        provide: JhiTrackerService,
+                        useClass: MockTrackerService
+                    }
+                ]
             })
                 .overrideTemplate(SettingsComponent, '')
                 .compileComponents();

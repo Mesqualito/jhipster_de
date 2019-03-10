@@ -1,6 +1,6 @@
 package de.jhipster.web.rest;
 
-import de.jhipster.JhipsterApp;
+import de.jhipster.AppApp;
 import de.jhipster.domain.Authority;
 import de.jhipster.domain.User;
 import de.jhipster.repository.UserRepository;
@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see UserResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = AppApp.class)
 public class UserResourceIntTest {
 
     private static final String DEFAULT_LOGIN = "johndoe";

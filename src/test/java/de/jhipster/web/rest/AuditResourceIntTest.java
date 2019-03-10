@@ -1,6 +1,6 @@
 package de.jhipster.web.rest;
 
-import de.jhipster.JhipsterApp;
+import de.jhipster.AppApp;
 import de.jhipster.config.audit.AuditEventConverter;
 import de.jhipster.domain.PersistentAuditEvent;
 import de.jhipster.repository.PersistenceAuditEventRepository;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see AuditResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = AppApp.class)
 @Transactional
 public class AuditResourceIntTest {
 

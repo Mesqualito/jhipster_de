@@ -37,8 +37,8 @@ spring:
             indent-output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:file:./build/h2db/db/jhipster;DB_CLOSE_DELAY=-1
-        username: jhipster
+        url: jdbc:h2:file:./build/h2db/db/app;DB_CLOSE_DELAY=-1
+        username: app
         password:
         hikari:
             poolName: Hikari
@@ -97,12 +97,12 @@ jhipster:
         authentication:
             jwt:
                 # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-                base64-secret: cabba45be4e8ff61d666cb0f767e06de39a66244
+                base64-secret: MTQyZTlhM2NjOTVjNzMyOWU0NTY3YTcxMDZlNWEyMmNjNDg3YTUzMDFmYmYzNjQyODBiZTgzZTczZWMxOTRmY2Y3YjMzYTFhYjg0NzExOTgzNzhmZTU4ZDJhMGZhZDkxMTYzMTc5MmM5ZTU1NjRiYTVmODVjMjk0ZmEyMDg1Y2M=
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: jhipster@localhost
+        from: app@localhost
         base-url: http://127.0.0.1:8080
     metrics:
         logs: # Reports metrics in the logs

@@ -1,6 +1,6 @@
 package de.jhipster.service;
 
-import de.jhipster.JhipsterApp;
+import de.jhipster.AppApp;
 import de.jhipster.config.Constants;
 import de.jhipster.domain.User;
 import de.jhipster.repository.UserRepository;
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
  * @see UserService
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = AppApp.class)
 @Transactional
 public class UserServiceIntTest {
 

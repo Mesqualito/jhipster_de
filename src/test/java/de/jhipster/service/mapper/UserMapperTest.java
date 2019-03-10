@@ -1,7 +1,7 @@
 package de.jhipster.service.mapper;
 
 
-import de.jhipster.JhipsterApp;
+import de.jhipster.AppApp;
 import de.jhipster.domain.User;
 import de.jhipster.service.dto.UserDTO;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @see UserMapper
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = AppApp.class)
 public class UserMapperTest {
 
     private static final String DEFAULT_LOGIN = "johndoe";

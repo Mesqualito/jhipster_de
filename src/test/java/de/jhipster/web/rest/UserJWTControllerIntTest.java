@@ -1,6 +1,6 @@
 package de.jhipster.web.rest;
 
-import de.jhipster.JhipsterApp;
+import de.jhipster.AppApp;
 import de.jhipster.domain.User;
 import de.jhipster.repository.UserRepository;
 import de.jhipster.security.jwt.TokenProvider;
@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.not;
  * @see UserJWTController
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = AppApp.class)
 public class UserJWTControllerIntTest {
 
     @Autowired

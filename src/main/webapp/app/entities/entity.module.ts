@@ -4,18 +4,6 @@ import { RouterModule } from '@angular/router';
 @NgModule({
     imports: [
         RouterModule.forChild([
-            {
-                path: 'blog',
-                loadChildren: './blog/blog.module#JhipsterBlogModule'
-            },
-            {
-                path: 'entry',
-                loadChildren: './entry/entry.module#JhipsterEntryModule'
-            },
-            {
-                path: 'tag',
-                loadChildren: './tag/tag.module#JhipsterTagModule'
-            }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])
     ],
@@ -24,4 +12,4 @@ import { RouterModule } from '@angular/router';
     providers: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class JhipsterEntityModule {}
+export class AppEntityModule {}

@@ -1,6 +1,6 @@
 package de.jhipster.web.rest;
 
-import de.jhipster.JhipsterApp;
+import de.jhipster.AppApp;
 import de.jhipster.config.Constants;
 import de.jhipster.domain.Authority;
 import de.jhipster.domain.User;
@@ -48,7 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see AccountResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JhipsterApp.class)
+@SpringBootTest(classes = AppApp.class)
 public class AccountResourceIntTest {
 
     @Autowired
