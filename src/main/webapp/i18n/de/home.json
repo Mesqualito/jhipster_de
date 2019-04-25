@@ -14,7 +14,7 @@
                 " der die Daten persistiert und dessen Datenbank bei Änderungen des Projektes mit liquibase angepasst werden kann."
             ],
             "p_2": [
-                "Die serverseitige docker-Konfiguration eines unserer Server finden Sie <a href=\"https://github.com/Mesqualito/docker-repository\" target=\"_blank\">hier</a>.",
+                "Die serverseitige docker-Konfiguration eines unserer Server finden Sie <a href=\"https://git.virginlands.de/Mesqualito/docker-repository\" target=\"_blank\">hier</a>.",
                 " Ich hoffe, ich habe die Vorteile des 'Convention-over-Configuration'-Prinzips an dieser Stelle genug verinnerlicht, um einerseits möglichst quelloffenes",
                 " Arbeiten auf allen Ebenen zu ermöglichen und gleichzeitig meine Serversicherheit nicht kompromittiert."
             ],
