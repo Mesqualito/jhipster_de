@@ -15,7 +15,7 @@
                 " The postgresql-container persists the applications data. In project changes the database can be migrated with liquibase."
             ],
             "p_2": [
-                "You can find the server-side docker-configuration of one of my servers <a href=\"https://github.com/Mesqualito/docker-repository\" target=\"_blank\">here</a>.",
+                "You can find the server-side docker-configuration of one of my servers <a href=\"https://git.virginlands.de/Mesqualito/docker-repository\" target=\"_blank\">here</a>.",
                 " I hope, I have internalized the advantages of 'Convention-over-Configuration'-principles at this point to be able to offer preferably open-source",
                 " work on every layer on the one hand and did not compromise my server security on the other hand."
             ],
