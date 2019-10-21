@@ -1,6 +1,4 @@
 package de.jhipster.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -12,7 +10,6 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Entry.
@@ -23,7 +20,7 @@ import java.util.Objects;
 public class Entry implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -38,7 +35,7 @@ public class Entry implements Serializable {
     private String content;
 
     @NotNull
-    @Column(name = "jhi_date", nullable = false)
+    @Column(name = "date", nullable = false)
     private ZonedDateTime date;
 
     @ManyToOne
@@ -144,19 +141,15 @@ public class Entry implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Entry)) {
             return false;
         }
-        Entry entry = (Entry) o;
-        if (entry.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), entry.getId());
+        return id != null && id.equals(((Entry) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

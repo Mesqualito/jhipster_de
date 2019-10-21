@@ -1,6 +1,4 @@
 package de.jhipster.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -11,7 +9,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Tag.
@@ -22,7 +19,7 @@ import java.util.Objects;
 public class Tag implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -91,19 +88,15 @@ public class Tag implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Tag)) {
             return false;
         }
-        Tag tag = (Tag) o;
-        if (tag.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), tag.getId());
+        return id != null && id.equals(((Tag) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

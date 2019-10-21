@@ -1,5 +1,4 @@
 package de.jhipster.repository;
-
 import de.jhipster.domain.Blog;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;

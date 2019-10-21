@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Entry } from 'app/shared/model/entry.model';
@@ -14,80 +14,80 @@ import { IEntry } from 'app/shared/model/entry.model';
 
 @Injectable({ providedIn: 'root' })
 export class EntryResolve implements Resolve<IEntry> {
-    constructor(private service: EntryService) {}
+  constructor(private service: EntryService) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IEntry> {
-        const id = route.params['id'] ? route.params['id'] : null;
-        if (id) {
-            return this.service.find(id).pipe(
-                filter((response: HttpResponse<Entry>) => response.ok),
-                map((entry: HttpResponse<Entry>) => entry.body)
-            );
-        }
-        return of(new Entry());
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IEntry> {
+    const id = route.params['id'];
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<Entry>) => response.ok),
+        map((entry: HttpResponse<Entry>) => entry.body)
+      );
     }
+    return of(new Entry());
+  }
 }
 
 export const entryRoute: Routes = [
-    {
-        path: '',
-        component: EntryComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.entry.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+  {
+    path: '',
+    component: EntryComponent,
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.entry.home.title'
     },
-    {
-        path: ':id/view',
-        component: EntryDetailComponent,
-        resolve: {
-            entry: EntryResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.entry.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':id/view',
+    component: EntryDetailComponent,
+    resolve: {
+      entry: EntryResolve
     },
-    {
-        path: 'new',
-        component: EntryUpdateComponent,
-        resolve: {
-            entry: EntryResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.entry.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.entry.home.title'
     },
-    {
-        path: ':id/edit',
-        component: EntryUpdateComponent,
-        resolve: {
-            entry: EntryResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.entry.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    }
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'new',
+    component: EntryUpdateComponent,
+    resolve: {
+      entry: EntryResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.entry.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':id/edit',
+    component: EntryUpdateComponent,
+    resolve: {
+      entry: EntryResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.entry.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  }
 ];
 
 export const entryPopupRoute: Routes = [
-    {
-        path: ':id/delete',
-        component: EntryDeletePopupComponent,
-        resolve: {
-            entry: EntryResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.entry.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    }
+  {
+    path: ':id/delete',
+    component: EntryDeletePopupComponent,
+    resolve: {
+      entry: EntryResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.entry.home.title'
+    },
+    canActivate: [UserRouteAccessService],
+    outlet: 'popup'
+  }
 ];

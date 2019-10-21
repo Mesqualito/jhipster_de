@@ -1,34 +1,18 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
 
-import { AppSharedModule } from 'app/shared';
-import {
-    BlogComponent,
-    BlogDetailComponent,
-    BlogUpdateComponent,
-    BlogDeletePopupComponent,
-    BlogDeleteDialogComponent,
-    blogRoute,
-    blogPopupRoute
-} from './';
+import { AppSharedModule } from 'app/shared/shared.module';
+import { BlogComponent } from './blog.component';
+import { BlogDetailComponent } from './blog-detail.component';
+import { BlogUpdateComponent } from './blog-update.component';
+import { BlogDeletePopupComponent, BlogDeleteDialogComponent } from './blog-delete-dialog.component';
+import { blogRoute, blogPopupRoute } from './blog.route';
 
 const ENTITY_STATES = [...blogRoute, ...blogPopupRoute];
 
 @NgModule({
-    imports: [AppSharedModule, RouterModule.forChild(ENTITY_STATES)],
-    declarations: [BlogComponent, BlogDetailComponent, BlogUpdateComponent, BlogDeleteDialogComponent, BlogDeletePopupComponent],
-    entryComponents: [BlogComponent, BlogUpdateComponent, BlogDeleteDialogComponent, BlogDeletePopupComponent],
-    providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [AppSharedModule, RouterModule.forChild(ENTITY_STATES)],
+  declarations: [BlogComponent, BlogDetailComponent, BlogUpdateComponent, BlogDeleteDialogComponent, BlogDeletePopupComponent],
+  entryComponents: [BlogDeleteDialogComponent]
 })
-export class AppBlogModule {
-    constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {
-            if (languageKey !== undefined) {
-                this.languageService.changeLanguage(languageKey);
-            }
-        });
-    }
-}
+export class AppBlogModule {}

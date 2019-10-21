@@ -4,21 +4,25 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-blog" [routerLink]="['/blog/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="appApp.blog.home.createLabel">
-            Create new Blog
+            Create a new Blog
             </span>
         </button>
     </h2>
+    <jhi-alert-error></jhi-alert-error>
     <jhi-alert></jhi-alert>
     <br/>
-    <div class="table-responsive" *ngIf="blogs">
-        <table class="table table-striped">
+    <div class="alert alert-warning" *ngIf="blogs?.length === 0">
+        <span jhiTranslate="appApp.blog.home.notFound">No blogs found</span>
+    </div>
+    <div class="table-responsive" *ngIf="blogs?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="appApp.blog.name">Name</span></th>
-            <th><span jhiTranslate="appApp.blog.handle">Handle</span></th>
-            <th><span jhiTranslate="appApp.blog.user">User</span></th>
-            <th></th>
+            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+            <th scope="col" ><span jhiTranslate="appApp.blog.name">Name</span></th>
+            <th scope="col" ><span jhiTranslate="appApp.blog.handle">Handle</span></th>
+            <th scope="col" ><span jhiTranslate="appApp.blog.user">User</span></th>
+            <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -30,7 +34,7 @@
                     {{blog.user?.login}}
                 </td>
                 <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
+                    <div class="btn-group">
                         <button type="submit"
                                 [routerLink]="['/blog', blog.id, 'view' ]"
                                 class="btn btn-info btn-sm">
@@ -44,7 +48,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', 'blog', { outlets: { popup: blog.id + '/delete'} }]"
+                                [routerLink]="['/blog', { outlets: { popup: blog.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">

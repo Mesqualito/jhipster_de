@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Tag } from 'app/shared/model/tag.model';
@@ -14,80 +14,80 @@ import { ITag } from 'app/shared/model/tag.model';
 
 @Injectable({ providedIn: 'root' })
 export class TagResolve implements Resolve<ITag> {
-    constructor(private service: TagService) {}
+  constructor(private service: TagService) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITag> {
-        const id = route.params['id'] ? route.params['id'] : null;
-        if (id) {
-            return this.service.find(id).pipe(
-                filter((response: HttpResponse<Tag>) => response.ok),
-                map((tag: HttpResponse<Tag>) => tag.body)
-            );
-        }
-        return of(new Tag());
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITag> {
+    const id = route.params['id'];
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<Tag>) => response.ok),
+        map((tag: HttpResponse<Tag>) => tag.body)
+      );
     }
+    return of(new Tag());
+  }
 }
 
 export const tagRoute: Routes = [
-    {
-        path: '',
-        component: TagComponent,
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.tag.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+  {
+    path: '',
+    component: TagComponent,
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.tag.home.title'
     },
-    {
-        path: ':id/view',
-        component: TagDetailComponent,
-        resolve: {
-            tag: TagResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.tag.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':id/view',
+    component: TagDetailComponent,
+    resolve: {
+      tag: TagResolve
     },
-    {
-        path: 'new',
-        component: TagUpdateComponent,
-        resolve: {
-            tag: TagResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.tag.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.tag.home.title'
     },
-    {
-        path: ':id/edit',
-        component: TagUpdateComponent,
-        resolve: {
-            tag: TagResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.tag.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    }
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'new',
+    component: TagUpdateComponent,
+    resolve: {
+      tag: TagResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.tag.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':id/edit',
+    component: TagUpdateComponent,
+    resolve: {
+      tag: TagResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.tag.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  }
 ];
 
 export const tagPopupRoute: Routes = [
-    {
-        path: ':id/delete',
-        component: TagDeletePopupComponent,
-        resolve: {
-            tag: TagResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'appApp.tag.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    }
+  {
+    path: ':id/delete',
+    component: TagDeletePopupComponent,
+    resolve: {
+      tag: TagResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'appApp.tag.home.title'
+    },
+    canActivate: [UserRouteAccessService],
+    outlet: 'popup'
+  }
 ];

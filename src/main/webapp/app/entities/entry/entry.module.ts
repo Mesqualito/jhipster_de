@@ -1,34 +1,18 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
 
-import { AppSharedModule } from 'app/shared';
-import {
-    EntryComponent,
-    EntryDetailComponent,
-    EntryUpdateComponent,
-    EntryDeletePopupComponent,
-    EntryDeleteDialogComponent,
-    entryRoute,
-    entryPopupRoute
-} from './';
+import { AppSharedModule } from 'app/shared/shared.module';
+import { EntryComponent } from './entry.component';
+import { EntryDetailComponent } from './entry-detail.component';
+import { EntryUpdateComponent } from './entry-update.component';
+import { EntryDeletePopupComponent, EntryDeleteDialogComponent } from './entry-delete-dialog.component';
+import { entryRoute, entryPopupRoute } from './entry.route';
 
 const ENTITY_STATES = [...entryRoute, ...entryPopupRoute];
 
 @NgModule({
-    imports: [AppSharedModule, RouterModule.forChild(ENTITY_STATES)],
-    declarations: [EntryComponent, EntryDetailComponent, EntryUpdateComponent, EntryDeleteDialogComponent, EntryDeletePopupComponent],
-    entryComponents: [EntryComponent, EntryUpdateComponent, EntryDeleteDialogComponent, EntryDeletePopupComponent],
-    providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [AppSharedModule, RouterModule.forChild(ENTITY_STATES)],
+  declarations: [EntryComponent, EntryDetailComponent, EntryUpdateComponent, EntryDeleteDialogComponent, EntryDeletePopupComponent],
+  entryComponents: [EntryDeleteDialogComponent]
 })
-export class AppEntryModule {
-    constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {
-            if (languageKey !== undefined) {
-                this.languageService.changeLanguage(languageKey);
-            }
-        });
-    }
-}
+export class AppEntryModule {}

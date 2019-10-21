@@ -1,34 +1,18 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
-import { JhiLanguageHelper } from 'app/core';
 
-import { AppSharedModule } from 'app/shared';
-import {
-    TagComponent,
-    TagDetailComponent,
-    TagUpdateComponent,
-    TagDeletePopupComponent,
-    TagDeleteDialogComponent,
-    tagRoute,
-    tagPopupRoute
-} from './';
+import { AppSharedModule } from 'app/shared/shared.module';
+import { TagComponent } from './tag.component';
+import { TagDetailComponent } from './tag-detail.component';
+import { TagUpdateComponent } from './tag-update.component';
+import { TagDeletePopupComponent, TagDeleteDialogComponent } from './tag-delete-dialog.component';
+import { tagRoute, tagPopupRoute } from './tag.route';
 
 const ENTITY_STATES = [...tagRoute, ...tagPopupRoute];
 
 @NgModule({
-    imports: [AppSharedModule, RouterModule.forChild(ENTITY_STATES)],
-    declarations: [TagComponent, TagDetailComponent, TagUpdateComponent, TagDeleteDialogComponent, TagDeletePopupComponent],
-    entryComponents: [TagComponent, TagUpdateComponent, TagDeleteDialogComponent, TagDeletePopupComponent],
-    providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [AppSharedModule, RouterModule.forChild(ENTITY_STATES)],
+  declarations: [TagComponent, TagDetailComponent, TagUpdateComponent, TagDeleteDialogComponent, TagDeletePopupComponent],
+  entryComponents: [TagDeleteDialogComponent]
 })
-export class AppTagModule {
-    constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
-        this.languageHelper.language.subscribe((languageKey: string) => {
-            if (languageKey !== undefined) {
-                this.languageService.changeLanguage(languageKey);
-            }
-        });
-    }
-}
+export class AppTagModule {}

@@ -1,7 +1,0 @@
-1.) Remove node_modules
-2.) git checkout jhipster_upgrade
-3.) git checkout --patch master .yo-rc.json
-4.) git checkout --patch master .jhipster
-5.) git commit -a
-6.) git push --set-upstream origin jhipster_upgrade
-7.) git checkout master
