@@ -1,4 +1,4 @@
-FROM openjdk:11.0.5-jre-slim
+FROM openjdk:11.0.5-jre-alpine
 
 ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JHIPSTER_SLEEP=0 \
