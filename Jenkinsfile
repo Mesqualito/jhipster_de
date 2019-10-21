@@ -13,7 +13,7 @@ node {
         checkout scm
     }
 
-    docker.image('jhipster/jhipster:v5.8.2').inside('-u jhipster -e GRADLE_USER_HOME=.gradle') {
+    docker.image('jhipster/jhipster:v6.4.1').inside('-u jhipster -e GRADLE_USER_HOME=.gradle') {
         stage('check java') {
             sh "java -version"
         }
@@ -48,7 +48,7 @@ node {
         }
 
         stage('packaging') {
-            sh "./gradlew bootWar -x test -Pprod -PnodeInstall --no-daemon"
+            sh "./gradlew --no-daemon -x test -Pprod -PnodeInstall -Pwar clean bootWar"
             archiveArtifacts artifacts: '**/build/libs/*.war', fingerprint: true
         }
 
