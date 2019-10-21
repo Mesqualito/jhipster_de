@@ -48,7 +48,7 @@ node {
         }
 
         stage('packaging') {
-            sh "./gradlew --no-daemon -x test -Pprod -PnodeInstall -Pwar clean bootWar"
+            sh "./gradlew --no-daemon -i -x test -Pprod -PnodeInstall -Pwar clean bootWar"
             archiveArtifacts artifacts: '**/build/libs/*.war', fingerprint: true
         }
 
@@ -56,8 +56,8 @@ node {
 
     def dockerImage
     stage('build docker') {
-        sh "cp -R src/main/docker build/"
-        sh "cp build/libs/*.war build/docker/"
+        sh "cp -Rvvv src/main/docker build/"
+        sh "cp -vvv build/libs/*.war build/docker/"
         dockerImage = docker.build("$IMAGE_NAME:$IMAGE_TAG", "build/docker")
     }
 
