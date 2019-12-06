@@ -55,14 +55,14 @@ node {
 
         stage('packaging') {
             sh "./mvnw -ntp verify -Pprod -DskipTests"
-            archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
+            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
         }
     }
 
     def dockerImage
     stage('build docker') {
         sh "cp -Rvvv src/main/docker build/"
-        sh "cp -vvv build/libs/*.jar build/docker/"
+        sh "cp -vvv target/*.jar build/docker/"
         dockerImage = docker.build("$IMAGE_NAME:$IMAGE_TAG", "build/docker")
     }
 
