@@ -6,58 +6,63 @@ def REGISTRY_URL='https://dockerregistry.eigenbaumarkt.com'
 def REGISTRY_USER='dockerregistry-login'
 def IMAGE_NAME='mesqualito/jhipster_de'
 def IMAGE_TAG='latest'
-// def CONTAINER_HTTP_PORT='8080'
 
 node {
     stage('checkout') {
         checkout scm
     }
 
-    docker.image('jhipster/jhipster:v6.5.1').inside('-u jhipster') {
+    docker.image('jhipster/jhipster:v6.5.1').inside('-u jhipster -e MAVEN_OPTS="-Duser.home=./"') {
         stage('check java') {
             sh "java -version"
         }
 
         stage('clean') {
             sh "chmod +x mvnw"
-            sh "./mvnw clean"
+            sh "./mvnw -ntp clean"
+        }
+        stage('nohttp') {
+            sh "./mvnw -ntp checkstyle:check"
+        }
+
+        stage('install tools') {
+            sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:install-node-and-npm -DnodeVersion=v12.13.0 -DnpmVersion=6.13.0"
         }
 
         stage('npm install') {
-            sh "./mvnw npm_install -PnodeInstall"
+            sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm"
         }
 
         stage('backend tests') {
             try {
-                sh "./mvnw test -PnodeInstall"
+                sh "./mvnw -ntp verify"
             } catch(err) {
                 throw err
             } finally {
-                junit '**/build/**/TEST-*.xml'
+                junit '**/target/test-results/**/TEST-*.xml'
             }
         }
 
         stage('frontend tests') {
             try {
-                sh "./mvnw npm_run_test -PnodeInstall"
+                sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'"
             } catch(err) {
                 throw err
             } finally {
-                junit '**/build/test-results/TESTS-*.xml'
+                junit '**/target/test-results/**/TEST-*.xml'
             }
         }
 
         stage('packaging') {
-            sh "./mvnw -i -x test -Pprod -PnodeInstall -Pwar clean bootWar"
-            archiveArtifacts artifacts: '**/build/libs/*.war', fingerprint: true
+            sh "./mvnw -ntp verify -Pprod -DskipTests"
+            archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
         }
-
     }
 
     def dockerImage
     stage('build docker') {
         sh "cp -Rvvv src/main/docker build/"
-        sh "cp -vvv build/libs/*.war build/docker/"
+        sh "cp -vvv build/libs/*.jar build/docker/"
         dockerImage = docker.build("$IMAGE_NAME:$IMAGE_TAG", "build/docker")
     }
 
@@ -71,3 +76,4 @@ node {
         sh "docker rmi $IMAGE_NAME:$IMAGE_TAG"
     }
 }
+
