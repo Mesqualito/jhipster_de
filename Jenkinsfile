@@ -13,23 +13,23 @@ node {
         checkout scm
     }
 
-    docker.image('jhipster/jhipster:v6.4.1').inside('-u jhipster -e GRADLE_USER_HOME=.gradle') {
+    docker.image('jhipster/jhipster:v6.5.1').inside('-u jhipster') {
         stage('check java') {
             sh "java -version"
         }
 
         stage('clean') {
-            sh "chmod +x gradlew"
-            sh "./gradlew clean --no-daemon"
+            sh "chmod +x mvnw"
+            sh "./mvnw clean --no-daemon"
         }
 
         stage('npm install') {
-            sh "./gradlew npm_install -PnodeInstall --no-daemon"
+            sh "./mvnw npm_install -PnodeInstall --no-daemon"
         }
 
         stage('backend tests') {
             try {
-                sh "./gradlew test -PnodeInstall --no-daemon"
+                sh "./mvnw test -PnodeInstall --no-daemon"
             } catch(err) {
                 throw err
             } finally {
@@ -39,7 +39,7 @@ node {
 
         stage('frontend tests') {
             try {
-                sh "./gradlew npm_run_test -PnodeInstall --no-daemon"
+                sh "./mvnw npm_run_test -PnodeInstall --no-daemon"
             } catch(err) {
                 throw err
             } finally {
@@ -48,7 +48,7 @@ node {
         }
 
         stage('packaging') {
-            sh "./gradlew --no-daemon -i -x test -Pprod -PnodeInstall -Pwar clean bootWar"
+            sh "./mvnw --no-daemon -i -x test -Pprod -PnodeInstall -Pwar clean bootWar"
             archiveArtifacts artifacts: '**/build/libs/*.war', fingerprint: true
         }
 
