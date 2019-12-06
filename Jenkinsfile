@@ -24,12 +24,12 @@ node {
         }
 
         stage('npm install') {
-            sh "./mvnw npm_install -PnodeInstall --no-daemon"
+            sh "./mvnw npm_install -PnodeInstall"
         }
 
         stage('backend tests') {
             try {
-                sh "./mvnw test -PnodeInstall --no-daemon"
+                sh "./mvnw test -PnodeInstall"
             } catch(err) {
                 throw err
             } finally {
@@ -39,7 +39,7 @@ node {
 
         stage('frontend tests') {
             try {
-                sh "./mvnw npm_run_test -PnodeInstall --no-daemon"
+                sh "./mvnw npm_run_test -PnodeInstall"
             } catch(err) {
                 throw err
             } finally {
@@ -48,7 +48,7 @@ node {
         }
 
         stage('packaging') {
-            sh "./mvnw --no-daemon -i -x test -Pprod -PnodeInstall -Pwar clean bootWar"
+            sh "./mvnw -i -x test -Pprod -PnodeInstall -Pwar clean bootWar"
             archiveArtifacts artifacts: '**/build/libs/*.war', fingerprint: true
         }
 
