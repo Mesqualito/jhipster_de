@@ -20,7 +20,7 @@ node {
 
         stage('clean') {
             sh "chmod +x mvnw"
-            sh "./mvnw clean --no-daemon"
+            sh "./mvnw clean"
         }
 
         stage('npm install') {
