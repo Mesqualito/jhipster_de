@@ -1,11 +1,11 @@
 {
   "home": {
-    "title": "Willkommen, Java Hipster!",
-    "subtitle": "Dies ist Ihre Hauptseite",
+    "title": "jhipster.de",
     "primaryIntroduction": {
-      "title": "Eine kurze Einführung zu Beginn der Entwicklung der Plattform jhipster.de:",
-      "p_1": [
-        "Diese jhipster-Webapplication wird aus <a href=\"https://github.com/Mesqualito/jhipster_de\" target=\"_blank\">GitHub-Sourcen</a>",
+      "title": "Eine Einführung zu jhipster.de:",
+      "p_1_1": "Diese jhipster-Webapplication wird aus ",
+      "p_1_2": "GitHub-Sourcen",
+      "p_1_3": [
         " über einen Jenkins-Server (momentan mit Übergabe des docker-server-lokalen 'docker.sock') nach erfolgreichen Tests als '*.war'-Datei",
         " und docker-image gebaut und einer docker-registry bekannt gemacht.<br/>",
         "Anschließend führt Jenkins einen Folge-Task aus, um per ssh und docker- bzw. docker-compose commands auf dem docker-server das Image",
@@ -22,9 +22,7 @@
         "Ich weise auf die zahlreichen genialen und scheinbar unermüdlichen Geister hin, die es ermöglichen, die schönsten Techniken, über die ich in mehr als zwanzig Jahren",
         " Berufserfahrung stolpern durfte, frei einsetzen zu können."
       ],
-      "p_4": [
-        "Anfänglich eine kleine Linksammlung von Referenzen, die mich mit jhipster.de verbinden:<br />(im ersten Schritt der Entwicklung direkt hier auf der Indexseite)"
-      ],
+      "p_4": ["Eine kleine Linksammlung von Referenzen, die mich mit jhipster.de verbinden:"],
       "li_1": [
         "alle hervorragenden Techniken und deren Handwerksmeister hinter <a href=\"https://www.jhipster.tech/\" target=\"_blank\">www.jhipster.tech</a>"
       ],
@@ -73,7 +71,7 @@
       "li_15": [
         "meine guten Freunde bei <a href=\"https://www.friends-of-bytes.com\" target=\"_blank\">F.o.B.</a> und alle meine anderen guten Freunde!"
       ],
-      "p_5": ["<b>Open Source</b> ist der einzige Weg in eine sinnvolle Zukunft der IT"]
+      "p_5": ["<b>Open Source</b> ist der einzige Weg in eine sinnvolle Zukunft der IT!"]
     },
 
     "logged": {
@@ -85,9 +83,9 @@
       "stackoverflow": "JHipster auf Stack Overflow",
       "bugtracker": "JHipster Fehlereinträge",
       "chat": "JHipster Chat",
-      "follow": "kontaktieren Sie uns mit @java_hipster auf Twitter"
+      "follow": "kontaktieren Sie das JHipster-Team mit @java_hipster auf Twitter"
     },
-    "like": "Wenn Sie JHipster mögen, vergessen Sie nicht uns einen Stern zu geben auf",
+    "like": "Wenn Sie JHipster mögen, vergessen Sie nicht dem JHipster-Team einen Stern zu geben auf",
     "github": "GitHub"
   }
 }

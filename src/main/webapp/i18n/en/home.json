@@ -1,12 +1,11 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
-    "subtitle": "This is your homepage",
-
+    "title": "jhipster.de",
     "primaryIntroduction": {
-      "title": "A short introduction at the beginning of the development for this platform jhipster.de:",
-      "p_1": [
-        "This jhipster-Application is connected to this <a href=\"https://github.com/Mesqualito/jhipster_de\" target=\"_blank\">GitHub-Repository</a>",
+      "title": "An introduction for jhipster.de:",
+      "p_1_1": "This jhipster-Application is connected to this ",
+      "p_1_2": "GitHub-Repository",
+      "p_1_3": [
         " and build after successful testing with a Jenkins-Server (connecting to the docker-server-local 'docker.sock') as '*.war'-file",
         " and docker-image and transferred to a docker-registry.<br/>",
         "Then Jenkins triggers a following task to connect to the docker-server and call some docker- and docker-compose commands to pull the new image",
@@ -23,9 +22,7 @@
         "I advert to numerous ingenious and apparent unremittingly minds who enable me to be acquainted with the hippest techniques over which I was stumbling in my last twenty years (plus) of work experience",
         " - free to use and with a lot of help to learn."
       ],
-      "p_4": [
-        "I want to start with a small collection of references which brought me to jhipster.de:<br />(in this early state of development here at the index page)"
-      ],
+      "p_4": ["A short collection of references which brought me to jhipster.de:"],
       "li_1": [
         "all outstanding techniques and their master craftsmen behind <a href=\"https://www.jhipster.tech/\" target=\"_blank\">www.jhipster.tech</a>"
       ],
@@ -72,7 +69,7 @@
       "li_15": [
         "my good friends at <a href=\"https://www.friends-of-bytes.com\" target=\"_blank\">F.o.B.</a> and all my other good friends!"
       ],
-      "p_5": ["<b>Open Source</b> is the only way for an useful future of IT."]
+      "p_5": ["<b>Open Source</b> is the only way for an useful future of IT!"]
     },
 
     "logged": {
@@ -86,7 +83,7 @@
       "chat": "JHipster public chat room",
       "follow": "follow @java_hipster on Twitter"
     },
-    "like": "If you like JHipster, don't forget to give us a star on",
+    "like": "If you like JHipster, don't forget to give the jhipster-team a star on",
     "github": "GitHub"
   }
 }
