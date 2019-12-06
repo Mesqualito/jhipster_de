@@ -1,6 +1,6 @@
 package de.jhipster.repository;
 
-import de.jhipster.AppApp;
+import de.jhipster.JhipsterDeApp;
 import de.jhipster.config.Constants;
 import de.jhipster.config.audit.AuditEventConverter;
 import de.jhipster.domain.PersistentAuditEvent;
@@ -21,13 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static de.jhipster.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration tests for {@link CustomAuditEventRepository}.
  */
-@SpringBootTest(classes = AppApp.class)
+@SpringBootTest(classes = JhipsterDeApp.class)
 @Transactional
 public class CustomAuditEventRepositoryIT {
 

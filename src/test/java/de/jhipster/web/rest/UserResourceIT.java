@@ -1,6 +1,6 @@
 package de.jhipster.web.rest;
 
-import de.jhipster.AppApp;
+import de.jhipster.JhipsterDeApp;
 import de.jhipster.domain.Authority;
 import de.jhipster.domain.User;
 import de.jhipster.repository.UserRepository;
@@ -26,18 +26,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link UserResource} REST controller.
  */
-@SpringBootTest(classes = AppApp.class)
+@SpringBootTest(classes = JhipsterDeApp.class)
 public class UserResourceIT {
 
     private static final String DEFAULT_LOGIN = "johndoe";

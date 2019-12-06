@@ -29,7 +29,7 @@ spring:
   devtools:
     restart:
       enabled: true
-      additional-exclude: .h2.server.properties
+      additional-exclude: static/**,.h2.server.properties
     livereload:
       enabled: false # we use Webpack dev server + BrowserSync for livereload
   jackson:
@@ -37,8 +37,8 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./build/h2db/db/app;DB_CLOSE_DELAY=-1
-    username: app
+    url: jdbc:h2:file:./target/h2db/db/jhipster_de;DB_CLOSE_DELAY=-1
+    username: jhipster_de
     password:
     hikari:
       poolName: Hikari
@@ -95,7 +95,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: MTQyZTlhM2NjOTVjNzMyOWU0NTY3YTcxMDZlNWEyMmNjNDg3YTUzMDFmYmYzNjQyODBiZTgzZTczZWMxOTRmY2Y3YjMzYTFhYjg0NzExOTgzNzhmZTU4ZDJhMGZhZDkxMTYzMTc5MmM5ZTU1NjRiYTVmODVjMjk0ZmEyMDg1Y2M=
+        base64-secret: MGEyMDBmNGUzYzFkODZmMDI5NjRlNTY2NDE5MWI0N2ZhMTk1M2NiNTZkZTdhZmQ2ODRkMWYxNWFhMGUzODg0ODViZjYxYzY0OTRlOWYxNjNlM2VmZDViYTdiZjg2M2RjYmFiZDBlMjc4ZDFiN2M3YzliOTE3YWQyNWYzZmU4ZmM=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

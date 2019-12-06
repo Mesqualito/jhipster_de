@@ -1,6 +1,6 @@
 package de.jhipster.web.rest;
 
-import de.jhipster.AppApp;
+import de.jhipster.JhipsterDeApp;
 import de.jhipster.config.Constants;
 import de.jhipster.domain.Authority;
 import de.jhipster.domain.User;
@@ -15,7 +15,6 @@ import de.jhipster.web.rest.errors.ExceptionTranslator;
 import de.jhipster.web.rest.vm.KeyAndPasswordVM;
 import de.jhipster.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.RandomStringUtils;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -31,19 +30,23 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link AccountResource} REST controller.
  */
-@SpringBootTest(classes = AppApp.class)
+@SpringBootTest(classes = JhipsterDeApp.class)
 public class AccountResourceIT {
 
     @Autowired

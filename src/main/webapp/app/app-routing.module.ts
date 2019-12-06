@@ -22,7 +22,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'account',
-          loadChildren: () => import('./account/account.module').then(m => m.AppAccountModule)
+          loadChildren: () => import('./account/account.module').then(m => m.JhipsterDeAccountModule)
         },
         ...LAYOUT_ROUTES
       ],
@@ -31,4 +31,4 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
   ],
   exports: [RouterModule]
 })
-export class AppAppRoutingModule {}
+export class JhipsterDeAppRoutingModule {}

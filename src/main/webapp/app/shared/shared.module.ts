@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AppSharedLibsModule } from './shared-libs.module';
+import { JhipsterDeSharedLibsModule } from './shared-libs.module';
 import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
 import { JhiAlertComponent } from './alert/alert.component';
 import { JhiAlertErrorComponent } from './alert/alert-error.component';
@@ -7,11 +7,11 @@ import { JhiLoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 @NgModule({
-  imports: [AppSharedLibsModule],
+  imports: [JhipsterDeSharedLibsModule],
   declarations: [FindLanguageFromKeyPipe, JhiAlertComponent, JhiAlertErrorComponent, JhiLoginModalComponent, HasAnyAuthorityDirective],
   entryComponents: [JhiLoginModalComponent],
   exports: [
-    AppSharedLibsModule,
+    JhipsterDeSharedLibsModule,
     FindLanguageFromKeyPipe,
     JhiAlertComponent,
     JhiAlertErrorComponent,
@@ -19,4 +19,4 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
     HasAnyAuthorityDirective
   ]
 })
-export class AppSharedModule {}
+export class JhipsterDeSharedModule {}

@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-import { AppTestModule } from '../../../test.module';
+import { JhipsterDeTestModule } from '../../../test.module';
 import { JhiConfigurationComponent } from 'app/admin/configuration/configuration.component';
 import { JhiConfigurationService } from 'app/admin/configuration/configuration.service';
 
@@ -13,7 +13,7 @@ describe('Component Tests', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [AppTestModule],
+        imports: [JhipsterDeTestModule],
         declarations: [JhiConfigurationComponent],
         providers: [JhiConfigurationService]
       })

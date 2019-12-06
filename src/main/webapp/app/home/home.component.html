@@ -5,87 +5,6 @@
     <div class="col-md-9">
         <h1 class="display-4" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
         <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
-        <div>
-            <h2 jhiTranslate="home.primaryIntroduction.title">Eine kurze Einführung zu Beginn der Entwicklung der Plattform jhipster.de:
-            </h2>
-            <p jhiTranslate="home.primaryIntroduction.p_1">Diese jhipster-Webapplication wird aus <a href="https://github.com/Mesqualito/jhipster_de"
-                                                          target="_blank">GitHub-Sourcen</a> über einen Jenkins-Server
-                (momentan mit Übergabe des docker-server-lokalen 'docker.sock') nach erfolgreichen
-                Tests als '*.war'-Datei und docker-image gebaut
-                und einer docker-registry bekannt gemacht.<br/>
-                Anschließend führt Jenkins einen Folge-Task aus, um per ssh und docker- bzw. docker-compose commands auf dem docker-server das Image
-                neu zu laden und ein rebuild und rerun
-                des docker-containers auszulösen, der dann per nginx-proxy und nginx-proxy-companion in weiteren
-                docker-containern seine Dienste hier zur Verfügung stellt. Dieser ist im docker-network angebunden an einen
-                Postgresql-docker-container, der die Daten persistiert und dessen Datenbank bei Änderungen des Projektes mit liquibase angepasst werden kann.</p>
-            <p jhiTranslate="home.primaryIntroduction.p_2">Die serverseitige docker-Konfiguration eines unserer Server finden Sie <a href="https://git.virginlands.de/Mesqualito/docker-repository" target="_blank">hier</a>.
-                Ich hoffe, ich habe die Vorteile des 'Convention-over-Configuration'-Prinzips an dieser Stelle genug verinnerlicht, um einerseits möglichst quelloffenes
-            Arbeiten auf allen Ebenen zu ermöglichen und gleichzeitig meine Serversicherheit nicht kompromittiert.</p>
-            <p jhiTranslate="home.primaryIntroduction.p_3">Ich weise auf die zahlreichen genialen und scheinbar unermüdlichen Geister hin, die es ermöglichen, die
-                schönsten Techniken, über die ich in mehr als zwanzig Jahren
-                Berufserfahrung stolpern durfte, frei einsetzen zu können.</p>
-            <p jhiTranslate="home.primaryIntroduction.p_4">
-                Anfänglich eine kleine Linksammlung von Referenzen, die mich mit jhipster.de verbinden:
-                <br />(im ersten Schritt der Entwicklung direkt hier auf der Indexseite)
-            </p>
-            <ul>
-                <li jhiTranslate="home.primaryIntroduction.li_1">alle hervorragenden Techniken und deren Handwerksmeister hinter <a href="https://www.jhipster.tech/"
-                                                                                       target="_blank">www.jhipster.tech</a>
-                </li>
-                <li jhiTranslate="home.primaryIntroduction.li_2">dazu gehören unter vielen anderen <a href="https://github.com/jdubois" target="_blank">Julien
-                    Dubois</a>,
-                    <a href="https://github.com/deepu105" target="_blank">Deepu K Sasidharan</a>
-                    und <a href="https://github.com/mraible" target="_blank">Matt Raible</a></li>
-                <li jhiTranslate="home.primaryIntroduction.li_3">die ebenso hilf- wie detailreiche Einführung <a
-                    href="https://www.packtpub.com/application-development/full-stack-development-jhipster"
-                    target="_blank">
-                    Full Stack Development with JHipster</a> von Sasidharan
-                </li>
-                <li jhiTranslate="home.primaryIntroduction.li_4">das stets aktuell gehaltene Buch von Raible <a
-                    href="https://www.infoq.com/minibooks/jhipster-mini-book-5" target="_blank">JHipster Mini-Book</a>
-                </li>
-                <li jhiTranslate="home.primaryIntroduction.li_5">die sehr engagierten Kurse von John Thompson zum Spring framework, Spring Boot und vielen damit
-                    verbundenen Techniken unter
-                    <a href="https://springframework.guru" target="_blank">springframwork.guru</a></li>
-                <li jhiTranslate="home.primaryIntroduction.li_6">die Firma <a href="https://www.generica.net" target="_blank">GENERICA GmbH</a>, die mir seit 2010
-                    die Möglichkeit gegeben hat, mir den IT-Beruf nach und nach
-                    wieder ansprechend zu gestalten
-                </li>
-                <li jhiTranslate="home.primaryIntroduction.li_7"><a href="https://de.wikipedia.org/wiki/Yuval_Noah_Harari" target="_blank">Yuval Noah Harari</a> und
-                    seine Bücher
-                    <a href="https://de.wikipedia.org/wiki/Eine_kurze_Geschichte_der_Menschheit" target="_blank">Eine
-                        kurze Geschichte der Menschheit</a> und
-                    <a href="https://de.wikipedia.org/wiki/Homo_Deus_-_Eine_Geschichte_von_Morgen" target="_blank">Homo
-                        Deus - Eine Geschichte von Morgen</a></li>
-                <li jhiTranslate="home.primaryIntroduction.li_8">die 'terraX'-Sendungen zum <a
-                    href="https://www.zdf.de/dokumentation/terra-x/supertalent-mensch-superhirne-sprachgenies-zauberwuerfel-100.html"
-                    target="_blank">
-                    Supertalent Mensch</a></li>
-                <li jhiTranslate="home.primaryIntroduction.li_9">Marc Elsberg und seine Bücher 'Blackout', 'Zero' und 'Helix'</li>
-                <li jhiTranslate="home.primaryIntroduction.li_10">den youtube-Channel <a href="https://www.youtube.com/user/UrknallWeltallLeben" target="_blank">Urknall,
-                    Weltall und Leben</a> und der zugehörigen Website
-                    <a href="https://urknall-weltall-leben.de" target="_blank">urknall-weltall-leben.de</a> von Prof.
-                    Joseph Gassner und Prof. Harald Lesch
-                </li>
-                <li jhiTranslate="home.primaryIntroduction.li_11">die dort in vielen Stunden gestaltete Playlist <a
-                    href="https://www.youtube.com/playlist?list=PLmDf0YliVUvGGAE-3CbIEoJM3DJHAaRzj" target="_blank">Von
-                    Aristoteles zur
-                    String-Theorie</a></li>
-                <li jhiTranslate="home.primaryIntroduction.li_13">meine geliebte Frau Marina, die mich zu einem besseren Menschen macht - dem Mensch, der ich sein will.
-                    Hauptsache immer an Ihrer Seite!
-                </li>
-                <li jhiTranslate="home.primaryIntroduction.li_14">meine Eltern, die mir den ersten Computer zur Konfirmation schenkten, einen Atari Mega ST. Und
-                    natürlich noch vieles mehr!
-                </li>
-                <li jhiTranslate="home.primaryIntroduction.li_15">meine guten Freunde bei <a href="https://www.friends-of-bytes.com" target="_blank">F.o.B.</a> und alle meine anderen guten Freunde
-                </li>
-
-            </ul>
-            <p jhiTranslate="home.primaryIntroduction.p_5">
-                <b>Open Source</b> ist der einzige Weg in eine sinnvolle Zukunft der IT!
-            </p>
-
-        </div>
 
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
@@ -112,7 +31,7 @@
             <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.stackoverflow">JHipster on Stack Overflow</a></li>
             <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.bugtracker">JHipster bug tracker</a></li>
             <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.chat">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow">follow @java_hipster on Twitter</a></li>
+            <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow">follow @jhipster on Twitter</a></li>
         </ul>
 
         <p>

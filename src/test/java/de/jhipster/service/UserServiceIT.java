@@ -1,12 +1,11 @@
 package de.jhipster.service;
 
-import de.jhipster.AppApp;
+import de.jhipster.JhipsterDeApp;
 import de.jhipster.config.Constants;
 import de.jhipster.domain.User;
 import de.jhipster.repository.UserRepository;
 import de.jhipster.service.dto.UserDTO;
 import de.jhipster.service.util.RandomUtil;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,10 +19,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -31,7 +30,7 @@ import static org.mockito.Mockito.when;
 /**
  * Integration tests for {@link UserService}.
  */
-@SpringBootTest(classes = AppApp.class)
+@SpringBootTest(classes = JhipsterDeApp.class)
 @Transactional
 public class UserServiceIT {
 

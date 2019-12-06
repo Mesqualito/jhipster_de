@@ -1,12 +1,11 @@
 package de.jhipster.web.rest;
 
-import de.jhipster.AppApp;
-import io.github.jhipster.config.JHipsterProperties;
+import de.jhipster.JhipsterDeApp;
 import de.jhipster.config.audit.AuditEventConverter;
 import de.jhipster.domain.PersistentAuditEvent;
 import de.jhipster.repository.PersistenceAuditEventRepository;
-
 import de.jhipster.service.AuditEventService;
+import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests for the {@link AuditResource} REST controller.
  */
-@SpringBootTest(classes = AppApp.class)
+@SpringBootTest(classes = JhipsterDeApp.class)
 @Transactional
 public class AuditResourceIT {
 

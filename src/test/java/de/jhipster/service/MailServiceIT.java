@@ -1,8 +1,7 @@
 package de.jhipster.service;
 
+import de.jhipster.JhipsterDeApp;
 import de.jhipster.config.Constants;
-
-import de.jhipster.AppApp;
 import de.jhipster.domain.User;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,14 +32,14 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
  * Integration tests for {@link MailService}.
  */
-@SpringBootTest(classes = AppApp.class)
+@SpringBootTest(classes = JhipsterDeApp.class)
 public class MailServiceIT {
 
     private static String languages[] = {

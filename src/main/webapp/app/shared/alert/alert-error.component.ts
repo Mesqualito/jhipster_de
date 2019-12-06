@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { JhiEventManager, JhiAlert, JhiAlertService } from 'ng-jhipster';
+import { JhiAlert, JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,7 +21,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
   constructor(private alertService: JhiAlertService, private eventManager: JhiEventManager, translateService: TranslateService) {
     this.alerts = [];
 
-    this.cleanHttpErrorListener = eventManager.subscribe('appApp.httpError', response => {
+    this.cleanHttpErrorListener = eventManager.subscribe('jhipsterDeApp.httpError', response => {
       let i;
       const httpErrorResponse = response.content;
       switch (httpErrorResponse.status) {
@@ -53,7 +53,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
               }
               // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
               const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
-              const fieldName = translateService.instant('appApp.' + fieldError.objectName + '.' + convertedField);
+              const fieldName = translateService.instant('jhipsterDeApp.' + fieldError.objectName + '.' + convertedField);
               this.addErrorAlert('Error on field "' + fieldName + '"', 'error.' + fieldError.message, { fieldName });
             }
           } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
