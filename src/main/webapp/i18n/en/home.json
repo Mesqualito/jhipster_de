@@ -1,94 +1,89 @@
 {
-    "home": {
-        "title": "Welcome, Java Hipster!",
-        "subtitle": "This is your homepage",
+  "home": {
+    "title": "jhipster.de",
+    "primaryIntroduction": {
+      "title": "An introduction for jhipster.de:",
+      "p_1_1": "This jhipster-Application is connected to this ",
+      "p_1_2": "GitHub-Repository",
+      "p_1_3": [
+        " and build after successful testing with a Jenkins-Server (connecting to the docker-server-local 'docker.sock') as '*.war'-file",
+        " and docker-image and transferred to a docker-registry.<br/>",
+        "Then Jenkins triggers a following task to connect to the docker-server and call some docker- and docker-compose commands to pull the new image",
+        " and rebuild and rerun the docker-container. This container offers his services here behind a nginx-proxy and nginx-proxy-companion running in some other",
+        " docker-containers. It is also connected to a postgresql-docker-container with a docker-network.",
+        " The postgresql-container persists the applications data. In project changes the database can be migrated with liquibase."
+      ],
+      "p_2": [
+        "You can find the server-side docker-configuration of one of my servers <a href=\"https://git.virginlands.de/Mesqualito/docker-repository\" target=\"_blank\">here</a>.",
+        " I hope, I have internalized the advantages of 'Convention-over-Configuration'-principles at this point to be able to offer preferably open-source",
+        " work on every layer on the one hand and did not compromise my server security on the other hand."
+      ],
+      "p_3": [
+        "I advert to numerous ingenious and apparent unremittingly minds who enable me to be acquainted with the hippest techniques over which I was stumbling in my last twenty years (plus) of work experience",
+        " - free to use and with a lot of help to learn."
+      ],
+      "p_4": ["A short collection of references which brought me to jhipster.de:"],
+      "li_1": [
+        "all outstanding techniques and their master craftsmen behind <a href=\"https://www.jhipster.tech/\" target=\"_blank\">www.jhipster.tech</a>"
+      ],
+      "li_2": [
+        "to which are included amongst many others <a href=\"https://github.com/jdubois\" target=\"_blank\">Julien Dubois</a>,",
+        " <a href=\"https://github.com/deepu105\" target=\"_blank\">Deepu K Sasidharan</a> and <a href=\"https://github.com/mraible\" target=\"_blank\">Matt Raible</a>"
+      ],
+      "li_3": [
+        "the helpful as well as detailed introduction <a href=\"https://www.packtpub.com/application-development/full-stack-development-jhipster\" target=\"_blank\">Full",
+        " Stack Development with JHipster</a> by Sasidharan"
+      ],
+      "li_4": [
+        "the evermore kept up to date book by Raible <a href=\"https://www.infoq.com/minibooks/jhipster-mini-book-5\" target=\"_blank\">JHipster Mini-Book</a>"
+      ],
+      "li_5": [
+        "the very dedicated Courses by John Thompson to the Spring framework, Spring Boot and many techniques connected to them to be found in",
+        " <a href=\"https://springframework.guru\" target=\"_blank\">springframwork.guru</a>"
+      ],
+      "li_6": [
+        "the company <a href=\"https://www.generica.net/html/en/\" target=\"_blank\">GENERICA GmbH</a>, which gave me the possibility to change my IT-business back to something enjoyable bit by bit",
+        " over the last years"
+      ],
+      "li_7": [
+        "<a href=\"https://de.wikipedia.org/wiki/Yuval_Noah_Harari\" target=\"_blank\">Yuval Noah Harari</a> and his books",
+        " <a href=\"https://de.wikipedia.org/wiki/Eine_kurze_Geschichte_der_Menschheit\" target=\"_blank\">Eine kurze Geschichte der Menschheit</a> and",
+        " <a href=\"https://de.wikipedia.org/wiki/Homo_Deus_-_Eine_Geschichte_von_Morgen\" target=\"_blank\">Homo Deus - Eine Geschichte von Morgen</a>"
+      ],
+      "li_8": [
+        "the 'terraX'-broadcasts about the <a href=\"https://www.zdf.de/dokumentation/terra-x/supertalent-mensch-superhirne-sprachgenies-zauberwuerfel-100.html\" target=\"_blank\">Supertalent Mensch</a>"
+      ],
+      "li_9": ["Marc Elsberg and his books 'Blackout', 'Zero' und 'Helix'"],
+      "li_10": [
+        "the youtube-channel <a href=\"https://www.youtube.com/user/UrknallWeltallLeben\" target=\"_blank\">Urknall, Weltall und Leben</a> and the accompanying website",
+        " <a href=\"https://urknall-weltall-leben.de\" target=\"_blank\">urknall-weltall-leben.de</a> by Prof. Joseph Gassner and Prof. Harald Lesch"
+      ],
+      "li_11": [
+        "the at the channel in many hours created playlist <a href=\"https://www.youtube.com/playlist?list=PLmDf0YliVUvGGAE-3CbIEoJM3DJHAaRzj\" target=\"_blank\">Von",
+        " Aristoteles zur String-Theorie</a>"
+      ],
+      "li_13": [
+        "my beloved wife Marina who makes a better human out of me - the human I like to be. In the main thing forever at her side!"
+      ],
+      "li_14": ["my parents who donated me my first computer for confirmation, an Atari Mega ST. And of course a lot of 'things' more..."],
+      "li_15": [
+        "my good friends at <a href=\"https://www.friends-of-bytes.com\" target=\"_blank\">F.o.B.</a> and all my other good friends!"
+      ],
+      "p_5": ["<b>Open Source</b> is the only way for an useful future of IT!"]
+    },
 
-        "primaryIntroduction": {
-            "title": "A short introduction at the beginning of the development for this platform jhipster.de:",
-            "p_1": [
-                "This jhipster-Application is connected to this <a href=\"https://github.com/Mesqualito/jhipster_de\" target=\"_blank\">GitHub-Repository</a>",
-                " and build after successful testing with a Jenkins-Server (connecting to the docker-server-local 'docker.sock') as '*.war'-file",
-                " and docker-image and transferred to a docker-registry.<br/>",
-                "Then Jenkins triggers a following task to connect to the docker-server and call some docker- and docker-compose commands to pull the new image",
-                " and rebuild and rerun the docker-container. This container offers his services here behind a nginx-proxy and nginx-proxy-companion running in some other",
-                " docker-containers. It is also connected to a postgresql-docker-container with a docker-network.",
-                " The postgresql-container persists the applications data. In project changes the database can be migrated with liquibase."
-            ],
-            "p_2": [
-                "You can find the server-side docker-configuration of one of my servers <a href=\"https://git.virginlands.de/Mesqualito/docker-repository\" target=\"_blank\">here</a>.",
-                " I hope, I have internalized the advantages of 'Convention-over-Configuration'-principles at this point to be able to offer preferably open-source",
-                " work on every layer on the one hand and did not compromise my server security on the other hand."
-            ],
-            "p_3": [
-                "I advert to numerous ingenious and apparent unremittingly minds who enable me to be acquainted with the hippest techniques over which I was stumbling in my last twenty years (plus) of work experience",
-                " - free to use and with a lot of help to learn."
-            ],
-            "p_4": [
-                "I want to start with a small collection of references which brought me to jhipster.de:<br />(in this early state of development here at the index page)"
-            ],
-            "li_1": [
-                "all outstanding techniques and their master craftsmen behind <a href=\"https://www.jhipster.tech/\" target=\"_blank\">www.jhipster.tech</a>"
-            ],
-            "li_2": [
-                "to which are included amongst many others <a href=\"https://github.com/jdubois\" target=\"_blank\">Julien Dubois</a>,",
-                " <a href=\"https://github.com/deepu105\" target=\"_blank\">Deepu K Sasidharan</a> and <a href=\"https://github.com/mraible\" target=\"_blank\">Matt Raible</a>"
-            ],
-            "li_3": [
-                "the helpful as well as detailed introduction <a href=\"https://www.packtpub.com/application-development/full-stack-development-jhipster\" target=\"_blank\">Full",
-                " Stack Development with JHipster</a> by Sasidharan"
-            ],
-            "li_4": [
-                "the evermore kept up to date book by Raible <a href=\"https://www.infoq.com/minibooks/jhipster-mini-book-5\" target=\"_blank\">JHipster Mini-Book</a>"
-            ],
-            "li_5": [
-                "the very dedicated Courses by John Thompson to the Spring framework, Spring Boot and many techniques connected to them to be found in",
-                " <a href=\"https://springframework.guru\" target=\"_blank\">springframwork.guru</a>"
-            ],
-            "li_6": [
-                "the company <a href=\"https://www.generica.net/html/en/\" target=\"_blank\">GENERICA GmbH</a>, which gave me the possibility to change my IT-business back to something enjoyable bit by bit",
-                " over the last years"
-            ],
-            "li_7": [
-                "<a href=\"https://de.wikipedia.org/wiki/Yuval_Noah_Harari\" target=\"_blank\">Yuval Noah Harari</a> and his books",
-                " <a href=\"https://de.wikipedia.org/wiki/Eine_kurze_Geschichte_der_Menschheit\" target=\"_blank\">Eine kurze Geschichte der Menschheit</a> and",
-                " <a href=\"https://de.wikipedia.org/wiki/Homo_Deus_-_Eine_Geschichte_von_Morgen\" target=\"_blank\">Homo Deus - Eine Geschichte von Morgen</a>"
-            ],
-            "li_8": [
-                "the 'terraX'-broadcasts about the <a href=\"https://www.zdf.de/dokumentation/terra-x/supertalent-mensch-superhirne-sprachgenies-zauberwuerfel-100.html\" target=\"_blank\">Supertalent Mensch</a>"
-            ],
-            "li_9": ["Marc Elsberg and his books 'Blackout', 'Zero' und 'Helix'"],
-            "li_10": [
-                "the youtube-channel <a href=\"https://www.youtube.com/user/UrknallWeltallLeben\" target=\"_blank\">Urknall, Weltall und Leben</a> and the accompanying website",
-                " <a href=\"https://urknall-weltall-leben.de\" target=\"_blank\">urknall-weltall-leben.de</a> by Prof. Joseph Gassner and Prof. Harald Lesch"
-            ],
-            "li_11": [
-                "the at the channel in many hours created playlist <a href=\"https://www.youtube.com/playlist?list=PLmDf0YliVUvGGAE-3CbIEoJM3DJHAaRzj\" target=\"_blank\">Von",
-                " Aristoteles zur String-Theorie</a>"
-            ],
-            "li_13": [
-                "my beloved wife Marina who makes a better human out of me - the human I like to be. In the main thing forever at her side!"
-            ],
-            "li_14": [
-                "my parents who donated me my first computer for confirmation, an Atari Mega ST. And of course a lot of 'things' more..."
-            ],
-            "li_15": [
-                "my good friends at <a href=\"https://www.friends-of-bytes.com\" target=\"_blank\">F.o.B.</a> and all my other good friends!"
-            ],
-            "p_5": ["<b>Open Source</b> is the only way for an useful future of IT."]
-        },
-
-        "logged": {
-            "message": "You are logged in as user \"{{username}}\"."
-        },
-        "question": "If you have any question on JHipster:",
-        "link": {
-            "homepage": "JHipster homepage",
-            "stackoverflow": "JHipster on Stack Overflow",
-            "bugtracker": "JHipster bug tracker",
-            "chat": "JHipster public chat room",
-            "follow": "follow @java_hipster on Twitter"
-        },
-        "like": "If you like JHipster, don't forget to give us a star on",
-        "github": "GitHub"
-    }
+    "logged": {
+      "message": "You are logged in as user \"{{username}}\"."
+    },
+    "question": "If you have any question on JHipster:",
+    "link": {
+      "homepage": "JHipster homepage",
+      "stackoverflow": "JHipster on Stack Overflow",
+      "bugtracker": "JHipster bug tracker",
+      "chat": "JHipster public chat room",
+      "follow": "follow @java_hipster on Twitter"
+    },
+    "like": "If you like JHipster, don't forget to give the jhipster-team a star on",
+    "github": "GitHub"
+  }
 }
