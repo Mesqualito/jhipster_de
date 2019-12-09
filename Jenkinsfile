@@ -3,7 +3,7 @@
 // triggered by GitHub in Jenkins-Pipeline
 
 // global variables
-def REGISTRY_URL='https://dockerregistry.eigenbaumarkt.com'
+def REGISTRY='dockerregistry.eigenbaumarkt.com'
 def REGISTRY_USER='dockerregistry-login'
 def IMAGE_NAME='mesqualito/jhipster_de'
 def IMAGE_TAG='latest'
@@ -63,6 +63,6 @@ node {
 
     def dockerImage
     stage('publish docker') {
-        sh "./mvnw -ntp jib:build -Dimage=$REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG -Djib.to.auth.username=$REGISTRY_USER"
+        sh "./mvnw -ntp jib:build -Dimage=$REGISTRY/$IMAGE_NAME:$IMAGE_TAG -Djib.to.auth.username=$REGISTRY_USER"
     }
 }
