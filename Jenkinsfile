@@ -1,11 +1,4 @@
 #!/usr/bin/env groovy
-// triggered by GitHub in Jenkins-Pipeline
-
-// global variables
-def REGISTRY_URL='https://dockerregistry.eigenbaumarkt.com'
-def REGISTRY_USER='dockerregistry-login'
-def IMAGE_NAME='mesqualito/jhipster_de'
-def IMAGE_TAG='latest'
 
 node {
     stage('checkout') {
@@ -60,20 +53,9 @@ node {
     }
 
     def dockerImage
-    stage('build docker') {
-        sh "cp -Rvvv src/main/docker build/"
-        sh "cp -vvv target/*.jar build/docker/"
-        dockerImage = docker.build("$IMAGE_NAME:$IMAGE_TAG", "build/docker")
-    }
-
     stage('publish docker') {
-        docker.withRegistry("$REGISTRY_URL", "$REGISTRY_USER") {
-            dockerImage.push "$IMAGE_TAG"
-        }
-    }
-
-    stage('Remove Unused docker image') {
-        sh "docker rmi $IMAGE_NAME:$IMAGE_TAG"
+        // A pre-requisite to this step is to setup authentication to the docker registry
+        // https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
+        sh "./mvnw -ntp jib:build"
     }
 }
-

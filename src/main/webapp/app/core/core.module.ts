@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { CookieModule } from 'ngx-cookie';
-import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateParser } from '@ngx-translate/core';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { JhiConfigService, JhiLanguageService, missingTranslationHandler, NgJhipsterModule, translatePartialLoader } from 'ng-jhipster';
 import locale from '@angular/common/locales/de';
@@ -20,6 +20,11 @@ import { ErrorHandlerInterceptor } from 'app/blocks/interceptor/errorhandler.int
 import { NotificationInterceptor } from 'app/blocks/interceptor/notification.interceptor';
 
 import { fontAwesomeIcons } from './icons/font-awesome-icons';
+import { TranslateAppParser } from 'app/shared/translateappparser.module';
+
+export function createTranslateParser() {
+  return new TranslateAppParser();
+}
 
 @NgModule({
   imports: [
@@ -39,6 +44,7 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
         useFactory: translatePartialLoader,
         deps: [HttpClient]
       },
+      parser: { provide: TranslateParser, useFactory: createTranslateParser },
       missingTranslationHandler: {
         provide: MissingTranslationHandler,
         useFactory: missingTranslationHandler,
