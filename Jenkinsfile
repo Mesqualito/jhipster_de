@@ -62,6 +62,7 @@ node {
     def dockerImage
     stage('build docker') {
         sh "cp -Rvvv src/main/docker build/"
+        sh "mkdir -p build/docker"
         sh "cp -vvv target/*.jar build/docker/"
         dockerImage = docker.build("$IMAGE_NAME:$IMAGE_TAG", "build/docker")
     }
