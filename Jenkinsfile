@@ -1,5 +1,14 @@
 #!/usr/bin/env groovy
 
+// triggered by GitHub in Jenkins-Pipeline
+
+// global variables
+def REGISTRY_URL='https://dockerregistry.eigenbaumarkt.com'
+def REGISTRY_USER='dockerregistry-login'
+def IMAGE_NAME='mesqualito/jhipster_de'
+def IMAGE_TAG='latest'
+// def CONTAINER_HTTP_PORT='8080'
+
 node {
     stage('checkout') {
         checkout scm
@@ -54,8 +63,6 @@ node {
 
     def dockerImage
     stage('publish docker') {
-        // A pre-requisite to this step is to setup authentication to the docker registry
-        // https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
-        sh "./mvnw -ntp jib:build"
+        sh "./mvnw -ntp jib:build -Dimage=$REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG -Djib.to.auth.username=$REGISTRY_USER"
     }
 }
