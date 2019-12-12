@@ -4,7 +4,7 @@
 
 // global variables
 def REGISTRY='dockerregistry.eigenbaumarkt.com'
-def REGISTRY_USER='dockerregistry-login'
+@Field REGISTRY_USER='dockerregistry-login'
 def IMAGE_NAME='mesqualito/jhipster_de'
 def IMAGE_TAG='latest'
 // def CONTAINER_HTTP_PORT='8080'
