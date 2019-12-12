@@ -63,8 +63,9 @@ node {
 
     def dockerImage
     stage('publish docker') {
-        docker.withRegistry("https://$REGISTRY", "$REGISTRY_USER") {
-            sh "./mvnw -ntp -X jib:build -Dimage=$REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
+        withCredentials([usernamePassword( credentialsId: '$REGISTRY_USER',
+            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            sh "./mvnw -ntp -X jib:build -Dimage=$REGISTRY/$IMAGE_NAME:$IMAGE_TAG -Djib.to.auth.username=${USERNAME} -Djib.to.auth.password=${PASSWORD}"
         }
     }
 }
