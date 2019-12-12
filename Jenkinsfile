@@ -63,6 +63,8 @@ node {
 
     def dockerImage
     stage('publish docker') {
-        sh "./mvnw -ntpX jib:build -Dimage=$REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
+        docker.withRegistry("$REGISTRY", "$REGISTRY_USER") {
+            sh "./mvnw -ntp -X jib:build -Dimage=$REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
+        }
     }
 }
