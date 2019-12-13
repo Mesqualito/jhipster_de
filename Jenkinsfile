@@ -4,7 +4,7 @@
 
 // global variables
 def REGISTRY='dockerregistry.eigenbaumarkt.com'
-@Field REGISTRY_USER='dockerregistry-login'
+// @Field REGISTRY_USER='dockerregistry-login'
 def IMAGE_NAME='mesqualito/jhipster_de'
 def IMAGE_TAG='latest'
 // def CONTAINER_HTTP_PORT='8080'
@@ -63,7 +63,7 @@ node {
 
     def dockerImage
     stage('publish docker') {
-        withCredentials([usernamePassword( credentialsId: $REGISTRY_USER,
+        withCredentials([usernamePassword( credentialsId: 'dockerregistry-login',
             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             sh "./mvnw -ntp -X jib:build -Dimage=$REGISTRY/$IMAGE_NAME:$IMAGE_TAG -Djib.to.auth.username=${USERNAME} -Djib.to.auth.password=${PASSWORD}"
         }
