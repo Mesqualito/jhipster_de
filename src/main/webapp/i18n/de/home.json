@@ -6,12 +6,15 @@
       "p_1_1": "Diese jhipster-Webapplication wird aus",
       "p_1_2": "GitHub-Sourcen",
       "p_1_3": [
-        "über einen Jenkins-Server (momentan mit Übergabe des docker-server-lokalen 'docker.sock') nach erfolgreichen Tests als '*.war'-Datei",
-        "und docker-image gebaut und einer docker-registry bekannt gemacht.<br/>",
+        "über einen Jenkins-Server (im docker container) nach erfolgreichen Tests",
+        "optimiert und gebaut und mithilfe des jib-maven-plugins in eine docker-registry (im docker container) geladen.<br/>",
         "Anschließend führt Jenkins einen Folge-Task aus, um per ssh und docker- bzw. docker-compose commands auf dem docker-server das Image",
-        "neu zu laden und ein rebuild und rerun des docker-containers auszulösen, der dann per nginx-proxy und nginx-proxy-companion in weiteren",
-        "docker-containern seine Dienste hier zur Verfügung stellt. Dieser ist im docker-network angebunden an einen Postgresql-docker-container,",
-        "der die Daten persistiert und dessen Datenbank bei Änderungen des Projektes mit liquibase angepasst werden kann."
+        "neu zu laden und ein rebuild und rerun des docker-containers auszulösen, der dann per nginx-proxy und letsencrypt-nginx-proxy-companion, die in weiteren",
+        "docker-containern laufen, seine Dienste hier zur Verfügung stellt. Dieser upgegradete container ist im docker user-defined network angebunden an einen postgresql docker container,",
+        "der die Daten persistiert und dessen Datenbank bei Änderungen des Projektes mit liquibase angepasst werden kann.",
+        "<br/>(Vorsicht mit der Namensgebung der Container!",
+        "Docker verwendet bei user-defined docker networks einen embedded DNS Server. Dieser wird den containern im network unter 127.0.0.11 als nameserver in /etc/resolv.conf",
+        "bekannt gemacht und löst die container-Namen zu deren docker network internen IPs auf!)"
       ],
       "p_2": [
         "Die serverseitige docker-Konfiguration eines unserer Server finden Sie <a href=\"https://git.virginlands.de/Mesqualito/docker-repository\" target=\"_blank\">hier</a>.",
