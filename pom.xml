@@ -463,10 +463,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
                 <version>${properties-maven-plugin.version}</version>
@@ -596,7 +592,7 @@
                                 <jvmFlag>-Xmx1G</jvmFlag>
                                 <jvmFlag>-Xdebug</jvmFlag>
                             </jvmFlags>
-                            <mainClass>de.subjektiv_news.SubjektivApp</mainClass>
+                            <mainClass>de.jhipster.JhipsterDeApp</mainClass>
                             <entrypoint>
                                 <shell>bash</shell>
                                 <option>-c</option>
