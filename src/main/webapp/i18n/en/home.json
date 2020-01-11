@@ -11,8 +11,8 @@
         "Then Jenkins triggers a following task to connect to the docker-server and call some docker- and docker-compose commands to pull the new image",
         "and rebuild and rerun the docker-container. This upgraded container offers his services here behind a nginx-proxy and nginx-proxy-companion running in some other",
         "docker-containers. It is also connected to a postgresql-docker-container in a user-defined docker network.",
-        "The postgresql-container persists the applications data. In project changes the database can be migrated with liquibase.<br/",
-        "(Attention with naming the docker containers!",
+        "The postgresql-container persists the applications data. In project changes the database can be migrated with liquibase.",
+        "<br/>(Attention with naming the docker containers!",
         "Docker uses an embedded DNS server in case of user-defined networks. This DNS server is announced to other containers on the network in /etc/resolv.conf as nameserver",
         "with the IP 127.0.0.11 and resolves the container names to their docker network internal IPs!)"
       ],
