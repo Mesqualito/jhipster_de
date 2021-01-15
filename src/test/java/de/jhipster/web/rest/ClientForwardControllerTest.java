@@ -1,9 +1,7 @@
 package de.jhipster.web.rest;
 
-import de.jhipster.JhipsterDeApp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -12,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Integration tests for the {@link ClientForwardController} REST controller.
+ * Unit tests for the {@link ClientForwardController} REST controller.
  */
-@SpringBootTest(classes = JhipsterDeApp.class)
-public class ClientForwardControllerIT {
+public class ClientForwardControllerTest {
 
     private MockMvc restMockMvc;
 
@@ -52,6 +51,7 @@ public class ClientForwardControllerIT {
             .andExpect(status().isOk())
             .andExpect(forwardedUrl("/"));
     }
+
 
     @RestController
     public static class TestController {

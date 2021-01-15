@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { JhiEventManager } from 'ng-jhipster';
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {JhiEventManager, JhiEventWithContent} from 'ng-jhipster';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
@@ -10,16 +10,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      tap(
-        () => {},
-        (err: any) => {
-          if (err instanceof HttpErrorResponse) {
-            if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('api/account'))))) {
-              this.eventManager.broadcast({ name: 'jhipsterDeApp.httpError', content: err });
-            }
-          }
+      tap(null, (err: HttpErrorResponse) => {
+        if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('api/account'))))) {
+          this.eventManager.broadcast(new JhiEventWithContent('jhipsterDeApp.httpError', err));
         }
-      )
+      })
     );
   }
 }

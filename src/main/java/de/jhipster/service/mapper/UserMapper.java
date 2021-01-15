@@ -3,10 +3,12 @@ package de.jhipster.service.mapper;
 import de.jhipster.domain.Authority;
 import de.jhipster.domain.User;
 import de.jhipster.service.dto.UserDTO;
-
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -59,7 +61,7 @@ public class UserMapper {
     private Set<Authority> authoritiesFromStrings(Set<String> authoritiesAsString) {
         Set<Authority> authorities = new HashSet<>();
 
-        if(authoritiesAsString != null){
+        if (authoritiesAsString != null) {
             authorities = authoritiesAsString.stream().map(string -> {
                 Authority auth = new Authority();
                 auth.setName(string);

@@ -1,8 +1,8 @@
 package de.jhipster.service;
 
-import io.github.jhipster.config.JHipsterProperties;
 import de.jhipster.config.audit.AuditEventConverter;
 import de.jhipster.repository.PersistenceAuditEventRepository;
+import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -43,10 +43,10 @@ public class AuditEventService {
     }
 
     /**
-    * Old audit events should be automatically deleted after 30 days.
-    *
-    * This is scheduled to get fired at 12:00 (am).
-    */
+     * Old audit events should be automatically deleted after 30 days.
+     *
+     * This is scheduled to get fired at 12:00 (am).
+     */
     @Scheduled(cron = "0 0 12 * * ?")
     public void removeOldAuditEvents() {
         persistenceAuditEventRepository
@@ -57,16 +57,19 @@ public class AuditEventService {
             });
     }
 
+    @Transactional(readOnly = true)
     public Page<AuditEvent> findAll(Pageable pageable) {
         return persistenceAuditEventRepository.findAll(pageable)
             .map(auditEventConverter::convertToAuditEvent);
     }
 
+    @Transactional(readOnly = true)
     public Page<AuditEvent> findByDates(Instant fromDate, Instant toDate, Pageable pageable) {
         return persistenceAuditEventRepository.findAllByAuditEventDateBetween(fromDate, toDate, pageable)
             .map(auditEventConverter::convertToAuditEvent);
     }
 
+    @Transactional(readOnly = true)
     public Optional<AuditEvent> find(Long id) {
         return persistenceAuditEventRepository.findById(id)
             .map(auditEventConverter::convertToAuditEvent);

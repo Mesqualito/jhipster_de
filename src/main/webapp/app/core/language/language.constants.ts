@@ -4,6 +4,6 @@
 */
 export const LANGUAGES: string[] = [
   'de',
-  'en'
+  'en',
   // jhipster-needle-i18n-language-constant - JHipster will add/remove languages in this array
 ];

@@ -1,14 +1,13 @@
 package de.jhipster.service.dto;
 
 import de.jhipster.config.Constants;
-
 import de.jhipster.domain.Authority;
 import de.jhipster.domain.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import javax.validation.constraints.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -179,6 +178,7 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "UserDTO{" +

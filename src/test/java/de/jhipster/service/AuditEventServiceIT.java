@@ -1,15 +1,14 @@
 package de.jhipster.service;
 
-import de.jhipster.JhipsterDeApp;
 import de.jhipster.domain.PersistentAuditEvent;
 import de.jhipster.repository.PersistenceAuditEventRepository;
+import de.jhipster.JhipsterDeApp;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -46,7 +45,7 @@ public class AuditEventServiceIT {
         auditEventWithinRetention = new PersistentAuditEvent();
         auditEventWithinRetention.setAuditEventDate(Instant.now().minus(jHipsterProperties.getAuditEvents().getRetentionPeriod() - 1, ChronoUnit.DAYS));
         auditEventWithinRetention.setPrincipal("test-user-retention");
-        auditEventWithinRetention.setAuditEventType("test-type");;
+        auditEventWithinRetention.setAuditEventType("test-type");
 
         auditEventNew = new PersistentAuditEvent();
         auditEventNew.setAuditEventDate(Instant.now());
@@ -63,9 +62,7 @@ public class AuditEventServiceIT {
         persistenceAuditEventRepository.save(auditEventNew);
 
         persistenceAuditEventRepository.flush();
-
         auditEventService.removeOldAuditEvents();
-
         persistenceAuditEventRepository.flush();
 
         assertThat(persistenceAuditEventRepository.findAll().size()).isEqualTo(2);

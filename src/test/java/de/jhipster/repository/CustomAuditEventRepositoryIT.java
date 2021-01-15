@@ -1,6 +1,7 @@
 package de.jhipster.repository;
 
 import de.jhipster.JhipsterDeApp;
+
 import de.jhipster.config.Constants;
 import de.jhipster.config.audit.AuditEventConverter;
 import de.jhipster.domain.PersistentAuditEvent;
@@ -21,8 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static de.jhipster.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
 import static org.assertj.core.api.Assertions.assertThat;
+import static de.jhipster.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
 
 /**
  * Integration tests for {@link CustomAuditEventRepository}.
@@ -39,19 +40,13 @@ public class CustomAuditEventRepositoryIT {
 
     private CustomAuditEventRepository customAuditEventRepository;
 
-    private PersistentAuditEvent testUserEvent;
-
-    private PersistentAuditEvent testOtherUserEvent;
-
-    private PersistentAuditEvent testOldUserEvent;
-
     @BeforeEach
     public void setup() {
         customAuditEventRepository = new CustomAuditEventRepository(persistenceAuditEventRepository, auditEventConverter);
         persistenceAuditEventRepository.deleteAll();
         Instant oneHourAgo = Instant.now().minusSeconds(3600);
 
-        testUserEvent = new PersistentAuditEvent();
+        PersistentAuditEvent testUserEvent = new PersistentAuditEvent();
         testUserEvent.setPrincipal("test-user");
         testUserEvent.setAuditEventType("test-type");
         testUserEvent.setAuditEventDate(oneHourAgo);
@@ -59,12 +54,12 @@ public class CustomAuditEventRepositoryIT {
         data.put("test-key", "test-value");
         testUserEvent.setData(data);
 
-        testOldUserEvent = new PersistentAuditEvent();
+        PersistentAuditEvent testOldUserEvent = new PersistentAuditEvent();
         testOldUserEvent.setPrincipal("test-user");
         testOldUserEvent.setAuditEventType("test-type");
         testOldUserEvent.setAuditEventDate(oneHourAgo.minusSeconds(10000));
 
-        testOtherUserEvent = new PersistentAuditEvent();
+        PersistentAuditEvent testOtherUserEvent = new PersistentAuditEvent();
         testOtherUserEvent.setPrincipal("other-test-user");
         testOtherUserEvent.setAuditEventType("test-type");
         testOtherUserEvent.setAuditEventDate(oneHourAgo);

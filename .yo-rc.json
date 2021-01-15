@@ -4,7 +4,7 @@
       "packageName": "de.jhipster",
       "nativeLanguage": "de"
     },
-    "jhipsterVersion": "6.5.1",
+    "jhipsterVersion": "6.10.5",
     "applicationType": "monolith",
     "baseName": "jhipster_de",
     "packageName": "de.jhipster",
@@ -37,6 +37,7 @@
     "enableTranslation": true,
     "nativeLanguage": "de",
     "languages": ["de", "en"],
-    "blueprints": []
+    "blueprints": [],
+    "creationTimestamp": 1610748898814
   }
 }

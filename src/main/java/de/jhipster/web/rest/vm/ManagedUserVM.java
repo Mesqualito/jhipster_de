@@ -1,6 +1,7 @@
 package de.jhipster.web.rest.vm;
 
 import de.jhipster.service.dto.UserDTO;
+
 import javax.validation.constraints.Size;
 
 /**
@@ -27,6 +28,7 @@ public class ManagedUserVM extends UserDTO {
         this.password = password;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "ManagedUserVM{" + super.toString() + "} ";

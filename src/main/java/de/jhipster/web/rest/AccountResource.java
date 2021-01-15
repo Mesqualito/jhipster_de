@@ -1,6 +1,5 @@
 package de.jhipster.web.rest;
 
-
 import de.jhipster.domain.User;
 import de.jhipster.repository.UserRepository;
 import de.jhipster.security.SecurityUtils;
@@ -8,10 +7,11 @@ import de.jhipster.service.MailService;
 import de.jhipster.service.UserService;
 import de.jhipster.service.dto.PasswordChangeDTO;
 import de.jhipster.service.dto.UserDTO;
-import de.jhipster.web.rest.errors.*;
+import de.jhipster.web.rest.errors.EmailAlreadyUsedException;
+import de.jhipster.web.rest.errors.InvalidPasswordException;
+import de.jhipster.web.rest.errors.LoginAlreadyUsedException;
 import de.jhipster.web.rest.vm.KeyAndPasswordVM;
 import de.jhipster.web.rest.vm.ManagedUserVM;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
@@ -147,14 +147,17 @@ public class AccountResource {
      * {@code POST   /account/reset-password/init} : Send an email to reset the password of the user.
      *
      * @param mail the mail of the user.
-     * @throws EmailNotFoundException {@code 400 (Bad Request)} if the email address is not registered.
      */
     @PostMapping(path = "/account/reset-password/init")
     public void requestPasswordReset(@RequestBody String mail) {
-       mailService.sendPasswordResetMail(
-           userService.requestPasswordReset(mail)
-               .orElseThrow(EmailNotFoundException::new)
-       );
+        Optional<User> user = userService.requestPasswordReset(mail);
+        if (user.isPresent()) {
+            mailService.sendPasswordResetMail(user.get());
+        } else {
+            // Pretend the request has been successful to prevent checking which emails really exist
+            // but log that an invalid attempt has been made
+            log.warn("Password reset requested for non existing mail");
+        }
     }
 
     /**
