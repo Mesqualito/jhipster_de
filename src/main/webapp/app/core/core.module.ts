@@ -4,7 +4,8 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 import {Title} from '@angular/platform-browser';
 import {FaIconLibrary} from '@fortawesome/angular-fontawesome';
 import {CookieService} from 'ngx-cookie-service';
-import {MissingTranslationHandler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateParser} from '@ngx-translate/core';
+import { TranslateAppParser } from 'app/shared/translateappparser.module';
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import {
   JhiConfigService,
@@ -26,6 +27,10 @@ import {NotificationInterceptor} from 'app/blocks/interceptor/notification.inter
 
 import {fontAwesomeIcons} from './icons/font-awesome-icons';
 
+export function createTranslateParser():any {
+  return new TranslateAppParser();
+}
+
 @NgModule({
   imports: [
     HttpClientModule,
@@ -43,6 +48,7 @@ import {fontAwesomeIcons} from './icons/font-awesome-icons';
         useFactory: translatePartialLoader,
         deps: [HttpClient],
       },
+      parser: { provide: TranslateParser, useFactory: createTranslateParser },
       missingTranslationHandler: {
         provide: MissingTranslationHandler,
         useFactory: missingTranslationHandler,
