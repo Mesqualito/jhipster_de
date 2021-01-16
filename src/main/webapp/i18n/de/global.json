@@ -47,14 +47,10 @@
     },
     "messages": {
       "info": {
-        "authenticated": {
-          "prefix": "Wenn Sie sich ",
-          "link": "anmelden",
-          "suffix": " möchten, versuchen Sie es mit <br/>- Administrator (Name=\"admin\" und Passwort=\"admin\")<br/>- Benutzer (Name=\"user\" und Passwort=\"user\")."
-        },
         "register": {
-          "noaccount": "Sie haben noch keinen Zugang?",
-          "link": "Registrieren Sie sich"
+          "noaccount": "Wollen wir gemeinsam an jhipster.de oder mit den JHipster-Techniken an Projekten arbeiten?",
+          "link": "Dann registrieren Sie sich einfach hier",
+          "link2": "für den internen Bereich!"
         }
       },
       "error": {
@@ -135,5 +131,5 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Dies ist Ihre Fußzeile"
+  "footer": "Alles andere auf <a href=\"https://www.gebsattel.rocks\" target=\"_blank\">www.gebsattel.rocks</a>."
 }
